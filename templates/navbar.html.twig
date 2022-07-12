@@ -9,12 +9,24 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Accueil</a>
         </li>
+        {# Espace Utilisateur : Quand l'utilisateur n'est pas connecté #}
+        {% if is_granted('ROLE_USER') == false %}
         <li class="nav-item">
           <a class="nav-link" href="{{ path('register') }}">Inscription</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ path('login') }}">Connexion</a>
         </li>
+        {% endif %}
+        {# Espace Utilisateur : Quand l'utilisateur est pas connecté #}
+        {% if is_granted('ROLE_USER') %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('profil_show') }}">Profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('logout') }}">Déconnexion</a>
+        </li>
+        {% endif %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
