@@ -1,4 +1,4 @@
-(function ()
-{
-    alert ('Bienvenue sur la Kavaseb !');
-})();
+// (function ()
+// {
+//     alert ('Bienvenue sur la Kavaseb !');
+// })();

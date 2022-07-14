@@ -27,20 +27,35 @@
           <a class="nav-link" href="{{path('logout') }}">Déconnexion</a>
         </li>
         {% endif %}
+        {# Espace Administrateur #}
+        {% if is_granted('ROLE_ADMIN') %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_personnalite_index') }}">Personnalité</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_personnalite_profession_index') }}">Profession</a></li>
+            {# <li><a class="dropdown-item" href="{{ path('admin_livre_index') }}">Bibliothèque : Livre</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_livre_editeur_francais_index') }}">Bibliothèque : Éditeur français</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_livre_editeur_original_index') }}">Bibliothèque : Éditeur original</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_livre_genre_index') }}">Bibliothèque : Genre</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_livre_annee_index') }}">Bibliothèque : Année</a></li> #}
+            {# <li><a class="dropdown-item" href="{{ path('admin_film_index') }}">Cinémathèque : Film</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_film_genre_index') }}">Cinémathèque : Genre</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_film_annee_index') }}">Cinémathèque : Année</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_album_index') }}">Discothèque : Album</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_piste_musique_index') }}">Discothèque : Piste</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_genre_musique_index') }}">Discothèque : Genre</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_label_musique_index') }}">Discothèque : Label</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_jeu_index') }}">Ludothèque : Jeu</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_genre_jeu_index') }}">Ludothèque : Genre</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_studio_jeu_index') }}">Ludothèque : Développeur</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_studio_fonction_index') }}">Ludothèque : Éditeur</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_systeme_jeu_index') }}">Ludothèque : Système</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_utilisateur_index') }}">Utilisateur</a></li> #}
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
+        {% endif %}
       </ul>
       {# Bouton de recherche #}
       <form class="d-flex">
