@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LA KAVASEB : Profil utilisateur{% endblock %}
+
+{% block body %}
+
+    <h1>Profil utilisateur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ utilisateur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ utilisateur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>E-Mail</th>
+                <td>{{ utilisateur.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('profil_edit') }}">Modifier</a>
+
+{% endblock %}

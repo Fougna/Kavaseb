@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LA KAVASEB : Modification du profil{% endblock %}
+
+{% block body %}
+
+    <h1>Modification du profil</h1>
+
+    {{ include('profil/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('profil_show') }}">Retour au profil</a>
+
+{% endblock %}
