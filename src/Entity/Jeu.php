@@ -124,6 +124,26 @@ class Jeu
      */
     private $roles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Systeme::class, mappedBy="jeu")
+     */
+    private $systemes;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=StudioDev::class, mappedBy="jeu")
+     */
+    private $developpeurs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=StudioEdit::class, mappedBy="jeu")
+     */
+    private $editeurs;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="jeu")
+     */
+    private $compositeurs;
+
     public function __construct()
     {
         $this->auteur = new ArrayCollection();
@@ -131,6 +151,10 @@ class Jeu
         $this->acteurs = new ArrayCollection();
         $this->doubleurs = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->systemes = new ArrayCollection();
+        $this->developpeurs = new ArrayCollection();
+        $this->editeurs = new ArrayCollection();
+        $this->compositeurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -466,6 +490,114 @@ class Jeu
             if ($role->getJeu() === $this) {
                 $role->setJeu(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Systeme>
+     */
+    public function getSystemes(): Collection
+    {
+        return $this->systemes;
+    }
+
+    public function addSysteme(Systeme $systeme): self
+    {
+        if (!$this->systemes->contains($systeme)) {
+            $this->systemes[] = $systeme;
+            $systeme->addJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSysteme(Systeme $systeme): self
+    {
+        if ($this->systemes->removeElement($systeme)) {
+            $systeme->removeJeu($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StudioDev>
+     */
+    public function getDeveloppeurs(): Collection
+    {
+        return $this->developpeurs;
+    }
+
+    public function addDeveloppeur(StudioDev $developpeur): self
+    {
+        if (!$this->developpeurs->contains($developpeur)) {
+            $this->developpeurs[] = $developpeur;
+            $developpeur->addJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDeveloppeur(StudioDev $developpeur): self
+    {
+        if ($this->developpeurs->removeElement($developpeur)) {
+            $developpeur->removeJeu($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StudioEdit>
+     */
+    public function getEditeurs(): Collection
+    {
+        return $this->editeurs;
+    }
+
+    public function addEditeur(StudioEdit $editeur): self
+    {
+        if (!$this->editeurs->contains($editeur)) {
+            $this->editeurs[] = $editeur;
+            $editeur->addJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEditeur(StudioEdit $editeur): self
+    {
+        if ($this->editeurs->removeElement($editeur)) {
+            $editeur->removeJeu($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compositeur>
+     */
+    public function getCompositeurs(): Collection
+    {
+        return $this->compositeurs;
+    }
+
+    public function addCompositeur(Compositeur $compositeur): self
+    {
+        if (!$this->compositeurs->contains($compositeur)) {
+            $this->compositeurs[] = $compositeur;
+            $compositeur->addJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompositeur(Compositeur $compositeur): self
+    {
+        if ($this->compositeurs->removeElement($compositeur)) {
+            $compositeur->removeJeu($this);
         }
 
         return $this;

@@ -149,6 +149,11 @@ class Serie
      */
     private $roles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="serie")
+     */
+    private $compositeurs;
+
     public function __construct()
     {
         $this->auteur = new ArrayCollection();
@@ -159,6 +164,7 @@ class Serie
         $this->acteurs = new ArrayCollection();
         $this->doubleurs = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->compositeurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -602,6 +608,33 @@ class Serie
             if ($role->getSerie() === $this) {
                 $role->setSerie(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compositeur>
+     */
+    public function getCompositeurs(): Collection
+    {
+        return $this->compositeurs;
+    }
+
+    public function addCompositeur(Compositeur $compositeur): self
+    {
+        if (!$this->compositeurs->contains($compositeur)) {
+            $this->compositeurs[] = $compositeur;
+            $compositeur->addSerie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompositeur(Compositeur $compositeur): self
+    {
+        if ($this->compositeurs->removeElement($compositeur)) {
+            $compositeur->removeSerie($this);
         }
 
         return $this;

@@ -44,9 +44,15 @@ class Saison
      */
     private $episodes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="saison")
+     */
+    private $compositeurs;
+
     public function __construct()
     {
         $this->episodes = new ArrayCollection();
+        $this->compositeurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +139,33 @@ class Saison
             if ($episode->getSaison() === $this) {
                 $episode->setSaison(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compositeur>
+     */
+    public function getCompositeurs(): Collection
+    {
+        return $this->compositeurs;
+    }
+
+    public function addCompositeur(Compositeur $compositeur): self
+    {
+        if (!$this->compositeurs->contains($compositeur)) {
+            $this->compositeurs[] = $compositeur;
+            $compositeur->addSaison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompositeur(Compositeur $compositeur): self
+    {
+        if ($this->compositeurs->removeElement($compositeur)) {
+            $compositeur->removeSaison($this);
         }
 
         return $this;

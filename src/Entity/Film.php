@@ -139,6 +139,11 @@ class Film
      */
     private $roles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="film")
+     */
+    private $compositeurs;
+
     public function __construct()
     {
         $this->auteur = new ArrayCollection();
@@ -148,6 +153,7 @@ class Film
         $this->acteurs = new ArrayCollection();
         $this->doubleurs = new ArrayCollection();
         $this->roles = new ArrayCollection();
+        $this->compositeurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -549,6 +555,33 @@ class Film
             if ($role->getFilm() === $this) {
                 $role->setFilm(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Compositeur>
+     */
+    public function getCompositeurs(): Collection
+    {
+        return $this->compositeurs;
+    }
+
+    public function addCompositeur(Compositeur $compositeur): self
+    {
+        if (!$this->compositeurs->contains($compositeur)) {
+            $this->compositeurs[] = $compositeur;
+            $compositeur->addFilm($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompositeur(Compositeur $compositeur): self
+    {
+        if ($this->compositeurs->removeElement($compositeur)) {
+            $compositeur->removeFilm($this);
         }
 
         return $this;
