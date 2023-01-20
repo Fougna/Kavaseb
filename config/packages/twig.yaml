@@ -1,5 +1,7 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
+    # Intégration de la mise en forme de Bootstrap dans Twig
+    form_themes: ['bootstrap_5_layout.html.twig']
 
 when@test:
     twig:
