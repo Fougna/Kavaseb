@@ -112,6 +112,11 @@ class Personnalite
      */
     private $compositeurs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=EditeurOriginal::class, mappedBy="personnalite")
+     */
+    private $editeurOriginals;
+
     public function __construct()
     {
         $this->auteurs = new ArrayCollection();
@@ -124,6 +129,7 @@ class Personnalite
         $this->acteurs = new ArrayCollection();
         $this->doubleurs = new ArrayCollection();
         $this->compositeurs = new ArrayCollection();
+        $this->editeurOriginals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -558,6 +564,36 @@ class Personnalite
             // set the owning side to null (unless already changed)
             if ($compositeur->getPersonnalite() === $this) {
                 $compositeur->setPersonnalite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EditeurOriginal>
+     */
+    public function getEditeurOriginals(): Collection
+    {
+        return $this->editeurOriginals;
+    }
+
+    public function addEditeurOriginal(EditeurOriginal $editeurOriginal): self
+    {
+        if (!$this->editeurOriginals->contains($editeurOriginal)) {
+            $this->editeurOriginals[] = $editeurOriginal;
+            $editeurOriginal->setPersonnalite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEditeurOriginal(EditeurOriginal $editeurOriginal): self
+    {
+        if ($this->editeurOriginals->removeElement($editeurOriginal)) {
+            // set the owning side to null (unless already changed)
+            if ($editeurOriginal->getPersonnalite() === $this) {
+                $editeurOriginal->setPersonnalite(null);
             }
         }
 

@@ -9,36 +9,66 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Accueil</a>
         </li>
+
         {% if is_granted('ROLE_USER') == false %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('register') }}">Inscription</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ path('login') }}">Connexion</a>
-          </li>
-        {% endif %}
-        {% if is_granted('ROLE_USER') %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{path('profil_show') }}">Profil</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{path('logout') }}">Déconnexion</a>
-          </li>
-        {% endif %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('register') }}">Inscription</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
+          <a class="nav-link" href="{{ path('login') }}">Connexion</a>
         </li>
+        {% endif %}
+
+        {% if is_granted('ROLE_USER') %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('profil_show') }}">Profil</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{path('logout') }}">Déconnexion</a>
+        </li>
+        {% endif %}
+
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administration</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{{ path('admin_personnalite_index') }}">Personnalités</a></li>
+            <li><hr class="dropdown-divider"><b>Professions</b></li>
+            <li><a class="dropdown-item" href="{{ path('admin_acteur_index') }}">Acteurs</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_auteur_index') }}">Auteurs</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_compositeur_index') }}">Compositeurs</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_doubleur_index') }}">Doubleurs</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_preface_index') }}">Préfaces, avant-propos, etc.</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_producteur_index') }}">Producteurs</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_realisateur_index') }}">Réalisateurs</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_role_index') }}">Rôles (Acteurs & Doubleurs)</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_scenariste_index') }}">Scénaristes</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_traducteur_index') }}">Traducteurs</a></li>
+            <li><hr class="dropdown-divider"><b>Bibliothèque</b></li>
+            <li><a class="dropdown-item" href="{{ path('admin_livre_index') }}">Livres</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_editeur_francais_index') }}">Éditeurs français</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_editeur_original_index') }}">Éditeurs originaux</a></li>
+            <li><hr class="dropdown-divider"><b>Cinémathèque</b></li>
+            <li><a class="dropdown-item" href="{{ path('admin_film_index') }}">Films</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_serie_index') }}">Séries</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_saison_index') }}">Saisons</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_episode_index') }}">Épisodes</a></li>
+            <li><hr class="dropdown-divider"><b>Discothèque</b></li>
+            <li><a class="dropdown-item" href="{{ path('admin_musique_index') }}">Musiques</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_morceau_index') }}">Morceaux</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_label_index') }}">Labels</a></li>
+            <li><hr class="dropdown-divider"><b>Ludothèque</b></li>
+            <li><a class="dropdown-item" href="{{ path('admin_jeu_index') }}">Jeux</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_systeme_index') }}">Systèmes</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_studio_jeu_index') }}">Studios</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_studio_dev_index') }}">Développement (Studios)</a></li>
+            <li><a class="dropdown-item" href="{{ path('admin_studio_edit_index') }}">Édition (Studios)</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ path('admin_utilisateur_index') }}">Utilisateur</a></li>
+          </ul>
+        </li>
+        {% endif %}
+
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

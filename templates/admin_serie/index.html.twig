@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Serie index{% endblock %}
+
+{% block body %}
+    <h1>Serie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TitreFrancais</th>
+                <th>SurTitreFrancais</th>
+                <th>SousTitreFrancais</th>
+                <th>TitreOriginal</th>
+                <th>SurTitreOriginal</th>
+                <th>SousTiTreOriginal</th>
+                <th>Image</th>
+                <th>AnneeDebut</th>
+                <th>AnneeFin</th>
+                <th>Duree</th>
+                <th>Genre</th>
+                <th>Chronologie</th>
+                <th>Format</th>
+                <th>NoteSerie</th>
+                <th>NoteImage</th>
+                <th>Description</th>
+                <th>Avis</th>
+                <th>Art</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for serie in series %}
+            <tr>
+                <td>{{ serie.id }}</td>
+                <td>{{ serie.titreFrancais }}</td>
+                <td>{{ serie.surTitreFrancais }}</td>
+                <td>{{ serie.sousTitreFrancais }}</td>
+                <td>{{ serie.titreOriginal }}</td>
+                <td>{{ serie.surTitreOriginal }}</td>
+                <td>{{ serie.sousTiTreOriginal }}</td>
+                <td>{{ serie.image }}</td>
+                <td>{{ serie.anneeDebut ? serie.anneeDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ serie.anneeFin ? serie.anneeFin|date('Y-m-d') : '' }}</td>
+                <td>{{ serie.duree }}</td>
+                <td>{{ serie.genre }}</td>
+                <td>{{ serie.chronologie }}</td>
+                <td>{{ serie.format }}</td>
+                <td>{{ serie.noteSerie }}</td>
+                <td>{{ serie.noteImage }}</td>
+                <td>{{ serie.description }}</td>
+                <td>{{ serie.avis }}</td>
+                <td>{{ serie.art }}</td>
+                <td>
+                    <a href="{{ path('admin_serie_show', {'id': serie.id}) }}">show</a>
+                    <a href="{{ path('admin_serie_edit', {'id': serie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="20">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_serie_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StudioJeu index{% endblock %}
+
+{% block body %}
+    <h1>StudioJeu index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Alias</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for studio_jeu in studio_jeus %}
+            <tr>
+                <td>{{ studio_jeu.id }}</td>
+                <td>{{ studio_jeu.nom }}</td>
+                <td>{{ studio_jeu.alias ? studio_jeu.alias|join(', ') : '' }}</td>
+                <td>{{ studio_jeu.image }}</td>
+                <td>
+                    <a href="{{ path('admin_studio_jeu_show', {'id': studio_jeu.id}) }}">show</a>
+                    <a href="{{ path('admin_studio_jeu_edit', {'id': studio_jeu.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_studio_jeu_new') }}">Create new</a>
+{% endblock %}

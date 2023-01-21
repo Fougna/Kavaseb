@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Personnalite index{% endblock %}
+
+{% block body %}
+    <h1>Personnalite index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Alias</th>
+                <th>Sexe</th>
+                <th>Nationalite</th>
+                <th>Naissance</th>
+                <th>Deces</th>
+                <th>Photo</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for personnalite in personnalites %}
+            <tr>
+                <td>{{ personnalite.id }}</td>
+                <td>{{ personnalite.nom }}</td>
+                <td>{{ personnalite.prenom }}</td>
+                <td>{{ personnalite.alias ? personnalite.alias|join(', ') : '' }}</td>
+                <td>{{ personnalite.sexe }}</td>
+                <td>{{ personnalite.nationalite }}</td>
+                <td>{{ personnalite.naissance ? personnalite.naissance|date('Y-m-d') : '' }}</td>
+                <td>{{ personnalite.deces ? personnalite.deces|date('Y-m-d') : '' }}</td>
+                <td>{{ personnalite.photo }}</td>
+                <td>
+                    <a href="{{ path('admin_personnalite_show', {'id': personnalite.id}) }}">show</a>
+                    <a href="{{ path('admin_personnalite_edit', {'id': personnalite.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_personnalite_new') }}">Create new</a>
+{% endblock %}

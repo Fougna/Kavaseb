@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StudioDev{% endblock %}
+
+{% block body %}
+    <h1>StudioDev</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ studio_dev.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ studio_dev.nom }}</td>
+            </tr>
+            <tr>
+                <th>Importance</th>
+                <td>{{ studio_dev.importance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_studio_dev_index') }}">back to list</a>
+
+    <a href="{{ path('admin_studio_dev_edit', {'id': studio_dev.id}) }}">edit</a>
+
+    {{ include('admin_studio_dev/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeu{% endblock %}
+
+{% block body %}
+    <h1>Jeu</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ jeu.id }}</td>
+            </tr>
+            <tr>
+                <th>TitreFrancais</th>
+                <td>{{ jeu.titreFrancais }}</td>
+            </tr>
+            <tr>
+                <th>SurTitreFrancais</th>
+                <td>{{ jeu.surTitreFrancais }}</td>
+            </tr>
+            <tr>
+                <th>SousTitreFrancais</th>
+                <td>{{ jeu.sousTitreFrancais }}</td>
+            </tr>
+            <tr>
+                <th>TitreOriginal</th>
+                <td>{{ jeu.titreOriginal }}</td>
+            </tr>
+            <tr>
+                <th>SurTitreOriginal</th>
+                <td>{{ jeu.surTitreOriginal }}</td>
+            </tr>
+            <tr>
+                <th>SousTitreOriginal</th>
+                <td>{{ jeu.sousTitreOriginal }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ jeu.image }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ jeu.annee ? jeu.annee|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ jeu.genre }}</td>
+            </tr>
+            <tr>
+                <th>Chronologie</th>
+                <td>{{ jeu.chronologie }}</td>
+            </tr>
+            <tr>
+                <th>NombreJoueursMin</th>
+                <td>{{ jeu.nombreJoueursMin }}</td>
+            </tr>
+            <tr>
+                <th>NombreJoueursMax</th>
+                <td>{{ jeu.nombreJoueursMax }}</td>
+            </tr>
+            <tr>
+                <th>NoteJeu</th>
+                <td>{{ jeu.noteJeu }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ jeu.description }}</td>
+            </tr>
+            <tr>
+                <th>Avis</th>
+                <td>{{ jeu.avis }}</td>
+            </tr>
+            <tr>
+                <th>Art</th>
+                <td>{{ jeu.art }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_jeu_index') }}">back to list</a>
+
+    <a href="{{ path('admin_jeu_edit', {'id': jeu.id}) }}">edit</a>
+
+    {{ include('admin_jeu/_delete_form.html.twig') }}
+{% endblock %}

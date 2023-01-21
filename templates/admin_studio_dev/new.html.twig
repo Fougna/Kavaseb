@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New StudioDev{% endblock %}
+
+{% block body %}
+    <h1>Create new StudioDev</h1>
+
+    {{ include('admin_studio_dev/_form.html.twig') }}
+
+    <a href="{{ path('admin_studio_dev_index') }}">back to list</a>
+{% endblock %}

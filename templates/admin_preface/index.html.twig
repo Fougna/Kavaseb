@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Preface index{% endblock %}
+
+{% block body %}
+    <h1>Preface index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Profession</th>
+                <th>Importance</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for preface in prefaces %}
+            <tr>
+                <td>{{ preface.id }}</td>
+                <td>{{ preface.profession }}</td>
+                <td>{{ preface.importance }}</td>
+                <td>
+                    <a href="{{ path('admin_preface_show', {'id': preface.id}) }}">show</a>
+                    <a href="{{ path('admin_preface_edit', {'id': preface.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_preface_new') }}">Create new</a>
+{% endblock %}

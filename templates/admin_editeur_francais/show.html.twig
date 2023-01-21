@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EditeurFrancais{% endblock %}
+
+{% block body %}
+    <h1>EditeurFrancais</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ editeur_francai.id }}</td>
+            </tr>
+            <tr>
+                <th>Profession</th>
+                <td>{{ editeur_francai.profession }}</td>
+            </tr>
+            <tr>
+                <th>Importance</th>
+                <td>{{ editeur_francai.importance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_editeur_francais_index') }}">back to list</a>
+
+    <a href="{{ path('admin_editeur_francais_edit', {'id': editeur_francai.id}) }}">edit</a>
+
+    {{ include('admin_editeur_francais/_delete_form.html.twig') }}
+{% endblock %}

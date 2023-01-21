@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compositeur index{% endblock %}
+
+{% block body %}
+    <h1>Compositeur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Profession</th>
+                <th>Importance</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for compositeur in compositeurs %}
+            <tr>
+                <td>{{ compositeur.id }}</td>
+                <td>{{ compositeur.profession }}</td>
+                <td>{{ compositeur.importance }}</td>
+                <td>
+                    <a href="{{ path('admin_compositeur_show', {'id': compositeur.id}) }}">show</a>
+                    <a href="{{ path('admin_compositeur_edit', {'id': compositeur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_compositeur_new') }}">Create new</a>
+{% endblock %}

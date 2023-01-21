@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}StudioEdit index{% endblock %}
+
+{% block body %}
+    <h1>StudioEdit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Importance</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for studio_edit in studio_edits %}
+            <tr>
+                <td>{{ studio_edit.id }}</td>
+                <td>{{ studio_edit.nom }}</td>
+                <td>{{ studio_edit.importance }}</td>
+                <td>
+                    <a href="{{ path('admin_studio_edit_show', {'id': studio_edit.id}) }}">show</a>
+                    <a href="{{ path('admin_studio_edit_edit', {'id': studio_edit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_studio_edit_new') }}">Create new</a>
+{% endblock %}

@@ -124,12 +124,18 @@ class Livre
      */
     private $prefaces;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=EditeurOriginal::class, mappedBy="livre")
+     */
+    private $editeurOriginals;
+
     public function __construct()
     {
         $this->auteurs = new ArrayCollection();
         $this->editeurFrancais = new ArrayCollection();
         $this->traducteurs = new ArrayCollection();
         $this->prefaces = new ArrayCollection();
+        $this->editeurOriginals = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -450,6 +456,33 @@ class Livre
     {
         if ($this->prefaces->removeElement($preface)) {
             $preface->removeLivre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EditeurOriginal>
+     */
+    public function getEditeurOriginals(): Collection
+    {
+        return $this->editeurOriginals;
+    }
+
+    public function addEditeurOriginal(EditeurOriginal $editeurOriginal): self
+    {
+        if (!$this->editeurOriginals->contains($editeurOriginal)) {
+            $this->editeurOriginals[] = $editeurOriginal;
+            $editeurOriginal->addLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEditeurOriginal(EditeurOriginal $editeurOriginal): self
+    {
+        if ($this->editeurOriginals->removeElement($editeurOriginal)) {
+            $editeurOriginal->removeLivre($this);
         }
 
         return $this;

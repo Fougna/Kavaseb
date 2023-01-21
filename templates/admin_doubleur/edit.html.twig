@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Doubleur{% endblock %}
+
+{% block body %}
+    <h1>Edit Doubleur</h1>
+
+    {{ include('admin_doubleur/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_doubleur_index') }}">back to list</a>
+
+    {{ include('admin_doubleur/_delete_form.html.twig') }}
+{% endblock %}

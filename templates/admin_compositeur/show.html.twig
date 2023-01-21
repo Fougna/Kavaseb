@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compositeur{% endblock %}
+
+{% block body %}
+    <h1>Compositeur</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ compositeur.id }}</td>
+            </tr>
+            <tr>
+                <th>Profession</th>
+                <td>{{ compositeur.profession }}</td>
+            </tr>
+            <tr>
+                <th>Importance</th>
+                <td>{{ compositeur.importance }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_compositeur_index') }}">back to list</a>
+
+    <a href="{{ path('admin_compositeur_edit', {'id': compositeur.id}) }}">edit</a>
+
+    {{ include('admin_compositeur/_delete_form.html.twig') }}
+{% endblock %}
