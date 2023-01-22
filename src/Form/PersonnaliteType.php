@@ -6,6 +6,8 @@ use App\Entity\Personnalite;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class PersonnaliteType extends AbstractType
 {
@@ -17,9 +19,18 @@ class PersonnaliteType extends AbstractType
             ->add('alias')
             ->add('sexe')
             ->add('nationalite')
-            ->add('naissance')
-            ->add('deces')
-            ->add('photo')
+            ->add('naissance', DateType::class, [
+                'widget' => 'single_text',
+                'years' => range(date('Y') - 5000, date('Y')),
+                ])
+            ->add('deces', DateType::class, [
+                'widget' => 'single_text',
+                'years' => range(date('Y') - 5000, date('Y')),
+                ])
+            ->add('photo', FileType::class, [
+            'mapped' => false,
+            'required' => false
+            ])
         ;
     }
 

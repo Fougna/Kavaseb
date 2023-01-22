@@ -6,6 +6,7 @@ use App\Entity\Jeu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class JeuType extends AbstractType
 {
@@ -18,7 +19,10 @@ class JeuType extends AbstractType
             ->add('titreOriginal')
             ->add('surTitreOriginal')
             ->add('sousTitreOriginal')
-            ->add('image')
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('annee')
             ->add('genre')
             ->add('chronologie')
@@ -27,7 +31,10 @@ class JeuType extends AbstractType
             ->add('noteJeu')
             ->add('description')
             ->add('avis')
-            ->add('art')
+            ->add('art', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('auteur')
             ->add('scenaristes')
             ->add('acteurs')

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PersonnaliteRepository;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PersonnaliteRepository::class)
@@ -29,11 +30,6 @@ class Personnalite
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $prenom;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $alias = [];
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -117,6 +113,11 @@ class Personnalite
      */
     private $editeurOriginals;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $alias;
+
     public function __construct()
     {
         $this->auteurs = new ArrayCollection();
@@ -157,18 +158,6 @@ class Personnalite
     public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
-
-        return $this;
-    }
-
-    public function getAlias(): ?array
-    {
-        return $this->alias;
-    }
-
-    public function setAlias(?array $alias): self
-    {
-        $this->alias = $alias;
 
         return $this;
     }
@@ -596,6 +585,18 @@ class Personnalite
                 $editeurOriginal->setPersonnalite(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAlias(): ?string
+    {
+        return $this->alias;
+    }
+
+    public function setAlias(?string $alias): self
+    {
+        $this->alias = $alias;
 
         return $this;
     }

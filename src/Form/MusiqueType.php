@@ -6,6 +6,7 @@ use App\Entity\Musique;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class MusiqueType extends AbstractType
 {
@@ -18,13 +19,19 @@ class MusiqueType extends AbstractType
             ->add('titreFrancais')
             ->add('surTitreFrancais')
             ->add('sousTitreFrancais')
-            ->add('image')
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('annee')
             ->add('duree')
             ->add('genre')
             ->add('chronologie')
             ->add('noteMusique')
-            ->add('art')
+            ->add('art', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('morceaux')
             ->add('compositeurs')
             ->add('labels')

@@ -6,6 +6,7 @@ use App\Entity\Livre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class LivreType extends AbstractType
 {
@@ -18,7 +19,10 @@ class LivreType extends AbstractType
             ->add('titreOriginal')
             ->add('surTitreOriginal')
             ->add('sousTitreOriginal')
-            ->add('image')
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('annee')
             ->add('nombreDePages')
             ->add('isbn')
@@ -28,7 +32,10 @@ class LivreType extends AbstractType
             ->add('noteReliure')
             ->add('description')
             ->add('avis')
-            ->add('art')
+            ->add('art', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('auteurs')
             ->add('editeurFrancais')
             ->add('traducteurs')

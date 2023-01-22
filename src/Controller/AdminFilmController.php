@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Film;
 use App\Form\FilmType;
+use App\Service\FileUploader;
 use App\Repository\FilmRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/film")
@@ -28,13 +29,27 @@ class AdminFilmController extends AbstractController
     /**
      * @Route("/new", name="admin_film_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, FilmRepository $filmRepository): Response
+    public function new(Request $request, FilmRepository $filmRepository, FileUploader $fileUploader): Response
     {
         $film = new Film();
         $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $film->setImage($imageFileName);
+            }
+
+            $artFile = $form->get('art')->getData();
+            if ($artFile)
+            {
+                $artFileName = $fileUploader->upload($artFile);
+                $film->setArt($artFileName);
+            }
+
             $filmRepository->add($film, true);
 
             return $this->redirectToRoute('admin_film_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +74,26 @@ class AdminFilmController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_film_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Film $film, FilmRepository $filmRepository): Response
+    public function edit(Request $request, Film $film, FilmRepository $filmRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(FilmType::class, $film);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $film->setImage($imageFileName);
+            }
+
+            $artFile = $form->get('art')->getData();
+            if ($artFile)
+            {
+                $artFileName = $fileUploader->upload($artFile);
+                $film->setArt($artFileName);
+            }
+            
             $filmRepository->add($film, true);
 
             return $this->redirectToRoute('admin_film_index', [], Response::HTTP_SEE_OTHER);

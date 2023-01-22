@@ -8,7 +8,7 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>N° de fiche</th>
                 <td>{{ personnalite.id }}</td>
             </tr>
             <tr>
@@ -16,7 +16,7 @@
                 <td>{{ personnalite.nom }}</td>
             </tr>
             <tr>
-                <th>Prenom</th>
+                <th>Prénom</th>
                 <td>{{ personnalite.prenom }}</td>
             </tr>
             <tr>
@@ -28,16 +28,20 @@
                 <td>{{ personnalite.sexe }}</td>
             </tr>
             <tr>
-                <th>Nationalite</th>
+                <th>Nationalité</th>
                 <td>{{ personnalite.nationalite }}</td>
             </tr>
             <tr>
-                <th>Naissance</th>
+                <th>Date de naissance</th>
                 <td>{{ personnalite.naissance ? personnalite.naissance|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Deces</th>
+                <th>Date de décès</th>
                 <td>{{ personnalite.deces ? personnalite.deces|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Âge</th>
+                <td>{{ personnalite.age }}</td>
             </tr>
             <tr>
                 <th>Photo</th>

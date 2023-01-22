@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Label;
 use App\Form\LabelType;
+use App\Service\FileUploader;
 use App\Repository\LabelRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/label")
@@ -28,13 +29,20 @@ class AdminLabelController extends AbstractController
     /**
      * @Route("/new", name="admin_label_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, LabelRepository $labelRepository): Response
+    public function new(Request $request, LabelRepository $labelRepository, FileUploader $fileUploader): Response
     {
         $label = new Label();
         $form = $this->createForm(LabelType::class, $label);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $label->setImage($imageFileName);
+            }
+
             $labelRepository->add($label, true);
 
             return $this->redirectToRoute('admin_label_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +67,19 @@ class AdminLabelController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_label_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Label $label, LabelRepository $labelRepository): Response
+    public function edit(Request $request, Label $label, LabelRepository $labelRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(LabelType::class, $label);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $label->setImage($imageFileName);
+            }
+
             $labelRepository->add($label, true);
 
             return $this->redirectToRoute('admin_label_index', [], Response::HTTP_SEE_OTHER);

@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Personnalite;
+use App\Service\FileUploader;
 use App\Form\PersonnaliteType;
 use App\Repository\PersonnaliteRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/personnalite")
@@ -28,13 +29,20 @@ class AdminPersonnaliteController extends AbstractController
     /**
      * @Route("/new", name="admin_personnalite_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, PersonnaliteRepository $personnaliteRepository): Response
+    public function new(Request $request, PersonnaliteRepository $personnaliteRepository, FileUploader $fileUploader): Response
     {
         $personnalite = new Personnalite();
         $form = $this->createForm(PersonnaliteType::class, $personnalite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('photo')->getData();
+            if ($photoFile)
+            {
+                $photoFileName = $fileUploader->upload($photoFile);
+                $personnalite->setPhoto($photoFileName);
+            }
+
             $personnaliteRepository->add($personnalite, true);
 
             return $this->redirectToRoute('admin_personnalite_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +67,19 @@ class AdminPersonnaliteController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_personnalite_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Personnalite $personnalite, PersonnaliteRepository $personnaliteRepository): Response
+    public function edit(Request $request, Personnalite $personnalite, PersonnaliteRepository $personnaliteRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(PersonnaliteType::class, $personnalite);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('photo')->getData();
+            if ($photoFile)
+            {
+                $photoFileName = $fileUploader->upload($photoFile);
+                $personnalite->setPhoto($photoFileName);
+            }
+
             $personnaliteRepository->add($personnalite, true);
 
             return $this->redirectToRoute('admin_personnalite_index', [], Response::HTTP_SEE_OTHER);

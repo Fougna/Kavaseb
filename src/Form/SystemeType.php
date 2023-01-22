@@ -6,6 +6,7 @@ use App\Entity\Systeme;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class SystemeType extends AbstractType
 {
@@ -13,7 +14,10 @@ class SystemeType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('image')
+            ->add('image', FileType::class, [
+                'mapped' => false,
+                'required' => false
+                ])
             ->add('annee')
             ->add('description')
             ->add('jeu')

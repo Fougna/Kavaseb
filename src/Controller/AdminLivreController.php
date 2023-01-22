@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Livre;
 use App\Form\LivreType;
+use App\Service\FileUploader;
 use App\Repository\LivreRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/livre")
@@ -28,13 +29,27 @@ class AdminLivreController extends AbstractController
     /**
      * @Route("/new", name="admin_livre_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, LivreRepository $livreRepository): Response
+    public function new(Request $request, LivreRepository $livreRepository, FileUploader $fileUploader): Response
     {
         $livre = new Livre();
         $form = $this->createForm(LivreType::class, $livre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $livre->setImage($imageFileName);
+            }
+
+            $artFile = $form->get('art')->getData();
+            if ($artFile)
+            {
+                $artFileName = $fileUploader->upload($artFile);
+                $livre->setArt($artFileName);
+            }
+
             $livreRepository->add($livre, true);
 
             return $this->redirectToRoute('admin_livre_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +74,26 @@ class AdminLivreController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_livre_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Livre $livre, LivreRepository $livreRepository): Response
+    public function edit(Request $request, Livre $livre, LivreRepository $livreRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(LivreType::class, $livre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $livre->setImage($imageFileName);
+            }
+
+            $artFile = $form->get('art')->getData();
+            if ($artFile)
+            {
+                $artFileName = $fileUploader->upload($artFile);
+                $livre->setArt($artFileName);
+            }
+
             $livreRepository->add($livre, true);
 
             return $this->redirectToRoute('admin_livre_index', [], Response::HTTP_SEE_OTHER);

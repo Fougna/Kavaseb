@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Jeu;
 use App\Form\JeuType;
+use App\Service\FileUploader;
 use App\Repository\JeuRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/jeu")
@@ -28,13 +29,27 @@ class AdminJeuController extends AbstractController
     /**
      * @Route("/new", name="admin_jeu_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, JeuRepository $jeuRepository): Response
+    public function new(Request $request, JeuRepository $jeuRepository, FileUploader $fileUploader): Response
     {
         $jeu = new Jeu();
         $form = $this->createForm(JeuType::class, $jeu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $jeu->setImage($imageFileName);
+            }
+
+            $artFile = $form->get('art')->getData();
+            if ($artFile)
+            {
+                $artFileName = $fileUploader->upload($artFile);
+                $jeu->setArt($artFileName);
+            }
+
             $jeuRepository->add($jeu, true);
 
             return $this->redirectToRoute('admin_jeu_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +74,26 @@ class AdminJeuController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_jeu_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Jeu $jeu, JeuRepository $jeuRepository): Response
+    public function edit(Request $request, Jeu $jeu, JeuRepository $jeuRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(JeuType::class, $jeu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $jeu->setImage($imageFileName);
+            }
+
+            $artFile = $form->get('art')->getData();
+            if ($artFile)
+            {
+                $artFileName = $fileUploader->upload($artFile);
+                $jeu->setArt($artFileName);
+            }
+
             $jeuRepository->add($jeu, true);
 
             return $this->redirectToRoute('admin_jeu_index', [], Response::HTTP_SEE_OTHER);

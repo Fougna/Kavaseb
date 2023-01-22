@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\StudioJeu;
 use App\Form\StudioJeuType;
+use App\Service\FileUploader;
 use App\Repository\StudioJeuRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/studio/jeu")
@@ -28,13 +29,20 @@ class AdminStudioJeuController extends AbstractController
     /**
      * @Route("/new", name="admin_studio_jeu_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, StudioJeuRepository $studioJeuRepository): Response
+    public function new(Request $request, StudioJeuRepository $studioJeuRepository, FileUploader $fileUploader): Response
     {
         $studioJeu = new StudioJeu();
         $form = $this->createForm(StudioJeuType::class, $studioJeu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $studioJeu->setImage($imageFileName);
+            }
+
             $studioJeuRepository->add($studioJeu, true);
 
             return $this->redirectToRoute('admin_studio_jeu_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +67,19 @@ class AdminStudioJeuController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_studio_jeu_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, StudioJeu $studioJeu, StudioJeuRepository $studioJeuRepository): Response
+    public function edit(Request $request, StudioJeu $studioJeu, StudioJeuRepository $studioJeuRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(StudioJeuType::class, $studioJeu);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $studioJeu->setImage($imageFileName);
+            }
+
             $studioJeuRepository->add($studioJeu, true);
 
             return $this->redirectToRoute('admin_studio_jeu_index', [], Response::HTTP_SEE_OTHER);

@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Systeme;
 use App\Form\SystemeType;
+use App\Service\FileUploader;
 use App\Repository\SystemeRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/admin/systeme")
@@ -28,13 +29,20 @@ class AdminSystemeController extends AbstractController
     /**
      * @Route("/new", name="admin_systeme_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, SystemeRepository $systemeRepository): Response
+    public function new(Request $request, SystemeRepository $systemeRepository, FileUploader $fileUploader): Response
     {
         $systeme = new Systeme();
         $form = $this->createForm(SystemeType::class, $systeme);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $systeme->setImage($imageFileName);
+            }
+
             $systemeRepository->add($systeme, true);
 
             return $this->redirectToRoute('admin_systeme_index', [], Response::HTTP_SEE_OTHER);
@@ -59,12 +67,19 @@ class AdminSystemeController extends AbstractController
     /**
      * @Route("/{id}/edit", name="admin_systeme_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Systeme $systeme, SystemeRepository $systemeRepository): Response
+    public function edit(Request $request, Systeme $systeme, SystemeRepository $systemeRepository, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(SystemeType::class, $systeme);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile)
+            {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $systeme->setImage($imageFileName);
+            }
+
             $systemeRepository->add($systeme, true);
 
             return $this->redirectToRoute('admin_systeme_index', [], Response::HTTP_SEE_OTHER);
