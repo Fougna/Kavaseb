@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre index{% endblock %}
+
+{% block body %}
+
+    <h1>Livre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TitreFrancais</th>
+                <th>SurTitreFrancais</th>
+                <th>SousTitreFrancais</th>
+                <th>TitreOriginal</th>
+                <th>SurTitreOriginal</th>
+                <th>SousTitreOriginal</th>
+                <th>Image</th>
+                <th>Annee</th>
+                <th>NombreDePages</th>
+                <th>Isbn</th>
+                <th>Genre</th>
+                <th>Chronologie</th>
+                <th>NoteLivre</th>
+                <th>NoteReliure</th>
+                <th>Description</th>
+                <th>Avis</th>
+                <th>Art</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for livre in livres %}
+            <tr>
+                <td>{{ livre.id }}</td>
+                <td>{{ livre.titreFrancais }}</td>
+                <td>{{ livre.surTitreFrancais }}</td>
+                <td>{{ livre.sousTitreFrancais }}</td>
+                <td>{{ livre.titreOriginal }}</td>
+                <td>{{ livre.surTitreOriginal }}</td>
+                <td>{{ livre.sousTitreOriginal }}</td>
+                <td>{{ livre.image }}</td>
+                <td>{{ livre.annee ? livre.annee|date('Y-m-d') : '' }}</td>
+                <td>{{ livre.nombreDePages }}</td>
+                <td>{{ livre.isbn }}</td>
+                <td>{{ livre.genre }}</td>
+                <td>{{ livre.chronologie }}</td>
+                <td>{{ livre.noteLivre }}</td>
+                <td>{{ livre.noteReliure }}</td>
+                <td>{{ livre.description }}</td>
+                <td>{{ livre.avis }}</td>
+                <td>{{ livre.art }}</td>
+                <td>
+                    <a href="{{ path('livre_liste_show', {'id': livre.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="19">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

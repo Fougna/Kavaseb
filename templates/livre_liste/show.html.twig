@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Livre{% endblock %}
+
+{% block body %}
+    <h1>Livre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ livre.id }}</td>
+            </tr>
+            <tr>
+                <th>TitreFrancais</th>
+                <td>{{ livre.titreFrancais }}</td>
+            </tr>
+            <tr>
+                <th>SurTitreFrancais</th>
+                <td>{{ livre.surTitreFrancais }}</td>
+            </tr>
+            <tr>
+                <th>SousTitreFrancais</th>
+                <td>{{ livre.sousTitreFrancais }}</td>
+            </tr>
+            <tr>
+                <th>TitreOriginal</th>
+                <td>{{ livre.titreOriginal }}</td>
+            </tr>
+            <tr>
+                <th>SurTitreOriginal</th>
+                <td>{{ livre.surTitreOriginal }}</td>
+            </tr>
+            <tr>
+                <th>SousTitreOriginal</th>
+                <td>{{ livre.sousTitreOriginal }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ livre.image }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ livre.annee ? livre.annee|date('Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NombreDePages</th>
+                <td>{{ livre.nombreDePages }}</td>
+            </tr>
+            <tr>
+                <th>Isbn</th>
+                <td>{{ livre.isbn }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ livre.genre }}</td>
+            </tr>
+            <tr>
+                <th>Chronologie</th>
+                <td>{{ livre.chronologie }}</td>
+            </tr>
+            <tr>
+                <th>NoteLivre</th>
+                <td>{{ livre.noteLivre }}</td>
+            </tr>
+            <tr>
+                <th>NoteReliure</th>
+                <td>{{ livre.noteReliure }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ livre.description }}</td>
+            </tr>
+            <tr>
+                <th>Avis</th>
+                <td>{{ livre.avis }}</td>
+            </tr>
+            <tr>
+                <th>Art</th>
+                <td>{{ livre.art }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('livre_liste_index') }}">back to list</a>
+
+{% endblock %}

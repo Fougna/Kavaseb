@@ -22,10 +22,12 @@ class PersonnaliteType extends AbstractType
             ->add('naissance', DateType::class, [
                 'widget' => 'single_text',
                 'years' => range(date('Y') - 5000, date('Y')),
+                'required' => false
                 ])
             ->add('deces', DateType::class, [
                 'widget' => 'single_text',
                 'years' => range(date('Y') - 5000, date('Y')),
+                'required' => false
                 ])
             ->add('photo', FileType::class, [
             'mapped' => false,

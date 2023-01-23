@@ -212,14 +212,14 @@ class Personnalite
 
     public function getAge(): int
     {
-        if (!$this->naissance) {
-            return null;
+        if($this->deces)
+        {
+            return $this->deces->diff($this->naissance)->y;
         }
 
-        if (!$this->age) {
-            $this->calculateAge();
-        }
-        return $this->age;
+        $now = new \DateTime();
+
+        return $now->diff($this->naissance)->y;
     }
 
     public function setAge(int $age): self
@@ -594,7 +594,7 @@ class Personnalite
         return $this->alias;
     }
 
-    public function setAlias(?string $alias): self
+    public function setAlias(string $alias): self
     {
         $this->alias = $alias;
 

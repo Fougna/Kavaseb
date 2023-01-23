@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jeu index{% endblock %}
+
+{% block body %}
+    <h1>Jeu index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TitreFrancais</th>
+                <th>SurTitreFrancais</th>
+                <th>SousTitreFrancais</th>
+                <th>TitreOriginal</th>
+                <th>SurTitreOriginal</th>
+                <th>SousTitreOriginal</th>
+                <th>Image</th>
+                <th>Annee</th>
+                <th>Genre</th>
+                <th>Chronologie</th>
+                <th>NombreJoueursMin</th>
+                <th>NombreJoueursMax</th>
+                <th>NoteJeu</th>
+                <th>Description</th>
+                <th>Avis</th>
+                <th>Art</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for jeu in jeus %}
+            <tr>
+                <td>{{ jeu.id }}</td>
+                <td>{{ jeu.titreFrancais }}</td>
+                <td>{{ jeu.surTitreFrancais }}</td>
+                <td>{{ jeu.sousTitreFrancais }}</td>
+                <td>{{ jeu.titreOriginal }}</td>
+                <td>{{ jeu.surTitreOriginal }}</td>
+                <td>{{ jeu.sousTitreOriginal }}</td>
+                <td>{{ jeu.image }}</td>
+                <td>{{ jeu.annee ? jeu.annee|date('Y') : '' }}</td>
+                <td>{{ jeu.genre }}</td>
+                <td>{{ jeu.chronologie }}</td>
+                <td>{{ jeu.nombreJoueursMin }}</td>
+                <td>{{ jeu.nombreJoueursMax }}</td>
+                <td>{{ jeu.noteJeu }}</td>
+                <td>{{ jeu.description }}</td>
+                <td>{{ jeu.avis }}</td>
+                <td>{{ jeu.art }}</td>
+                <td>
+                    <a href="{{ path('jeu_liste_show', {'id': jeu.id}) }}">show</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

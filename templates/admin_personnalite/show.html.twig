@@ -3,6 +3,7 @@
 {% block title %}Personnalite{% endblock %}
 
 {% block body %}
+
     <h1>Personnalite</h1>
 
     <table class="table">
@@ -33,11 +34,11 @@
             </tr>
             <tr>
                 <th>Date de naissance</th>
-                <td>{{ personnalite.naissance ? personnalite.naissance|date('Y-m-d') : '' }}</td>
+                <td>{{ personnalite.naissance ? personnalite.naissance|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Date de décès</th>
-                <td>{{ personnalite.deces ? personnalite.deces|date('Y-m-d') : '' }}</td>
+                <td>{{ personnalite.deces ? personnalite.deces|date('d-m-Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Âge</th>
@@ -45,7 +46,7 @@
             </tr>
             <tr>
                 <th>Photo</th>
-                <td>{{ personnalite.photo }}</td>
+                <td><img src="{{ asset('uploads/' ~ personnalite.photo) }}" alt=""></td>
             </tr>
         </tbody>
     </table>
@@ -55,4 +56,5 @@
     <a href="{{ path('admin_personnalite_edit', {'id': personnalite.id}) }}">edit</a>
 
     {{ include('admin_personnalite/_delete_form.html.twig') }}
+
 {% endblock %}
