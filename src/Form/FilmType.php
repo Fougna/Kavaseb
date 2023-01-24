@@ -6,6 +6,7 @@ use App\Entity\Film;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class FilmType extends AbstractType
@@ -23,7 +24,10 @@ class FilmType extends AbstractType
                 'mapped' => false,
                 'required' => false
                 ])
-            ->add('annee')
+            ->add('annee', DateType::class, [
+                'widget' => 'single_text',
+                'years' => range(date('Y') - 5000, date('Y')),
+                ])
             ->add('duree')
             ->add('genre')
             ->add('chronologie')

@@ -212,6 +212,13 @@ class Personnalite
 
     public function getAge(): int
     {
+        $unknown = 0;
+
+        if(!$this->naissance)
+        {
+            return $unknown;
+        }
+        
         if($this->deces)
         {
             return $this->deces->diff($this->naissance)->y;

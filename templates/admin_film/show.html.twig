@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Film{% endblock %}
+{% block title %}ADMINISTRATION | {% if film.surTitreFrancais %} {{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}{% endblock %}
 
 {% block body %}
-    <h1>Film</h1>
+    <h1><b>ADMINISTRATION | </b>{% if film.surTitreFrancais %} {{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}</h1>
+
+    <a href="{{ path('admin_film_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('admin_film_edit', {'id': film.id}) }}">Modifier</a>
 
     <table class="table">
         <tbody>
@@ -12,39 +16,23 @@
                 <td>{{ film.id }}</td>
             </tr>
             <tr>
-                <th>TitreFrancais</th>
-                <td>{{ film.titreFrancais }}</td>
+                <th>Titre français</th>
+                <td>{% if film.surTitreFrancais %} {{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}</td>
             </tr>
             <tr>
-                <th>SurTitreFrancais</th>
-                <td>{{ film.surTitreFrancais }}</td>
-            </tr>
-            <tr>
-                <th>SousTitreFrancais</th>
-                <td>{{ film.sousTitreFrancais }}</td>
-            </tr>
-            <tr>
-                <th>TitreOriginal</th>
-                <td>{{ film.titreOriginal }}</td>
-            </tr>
-            <tr>
-                <th>SurTitreOriginal</th>
-                <td>{{ film.surTitreOriginal }}</td>
-            </tr>
-            <tr>
-                <th>SousTitreOriginal</th>
-                <td>{{ film.sousTitreOriginal }}</td>
+                <th>Titre original</th>
+                <td>{% if film.surTitreOriginal %} {{ film.surTitreOriginal|upper }} – {% endif %}{{ film.titreOriginal|upper }}{% if film.sousTitreOriginal %} : {{ film.sousTitreOriginal }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ film.image }}</td>
+                <td><img src="{{ asset('uploads/' ~ film.image) }}" alt=""></td>
             </tr>
             <tr>
-                <th>Annee</th>
-                <td>{{ film.annee ? film.annee|date('Y-m-d') : '' }}</td>
+                <th>Année</th>
+                <td>{{ film.annee ? film.annee|date('Y') : '' }}</td>
             </tr>
             <tr>
-                <th>Duree</th>
+                <th>Durée</th>
                 <td>{{ film.duree }}</td>
             </tr>
             <tr>
@@ -60,11 +48,11 @@
                 <td>{{ film.format }}</td>
             </tr>
             <tr>
-                <th>NoteFilm</th>
+                <th>Note Film</th>
                 <td>{{ film.noteFilm }}</td>
             </tr>
             <tr>
-                <th>NoteImage</th>
+                <th>Note Image</th>
                 <td>{{ film.noteImage }}</td>
             </tr>
             <tr>
@@ -82,9 +70,6 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_film_index') }}">back to list</a>
-
-    <a href="{{ path('admin_film_edit', {'id': film.id}) }}">edit</a>
-
     {{ include('admin_film/_delete_form.html.twig') }}
+
 {% endblock %}

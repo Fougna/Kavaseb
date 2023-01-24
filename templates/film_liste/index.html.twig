@@ -1,63 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Film index{% endblock %}
+{% block title %}LA KAVASEB : Choix par titre de film{% endblock %}
 
 {% block body %}
 
-    <h1>Film index</h1>
+    <h1>Choix par titre de film</h1>
 
     <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>TitreFrancais</th>
-                <th>SurTitreFrancais</th>
-                <th>SousTitreFrancais</th>
-                <th>TitreOriginal</th>
-                <th>SurTitreOriginal</th>
-                <th>SousTitreOriginal</th>
-                <th>Image</th>
-                <th>Annee</th>
-                <th>Duree</th>
-                <th>Genre</th>
-                <th>Chronologie</th>
-                <th>Format</th>
-                <th>NoteFilm</th>
-                <th>NoteImage</th>
-                <th>Description</th>
-                <th>Avis</th>
-                <th>Art</th>
-                <th>actions</th>
-            </tr>
-        </thead>
         <tbody>
         {% for film in films %}
             <tr>
-                <td>{{ film.id }}</td>
-                <td>{{ film.titreFrancais }}</td>
-                <td>{{ film.surTitreFrancais }}</td>
-                <td>{{ film.sousTitreFrancais }}</td>
-                <td>{{ film.titreOriginal }}</td>
-                <td>{{ film.surTitreOriginal }}</td>
-                <td>{{ film.sousTitreOriginal }}</td>
-                <td>{{ film.image }}</td>
-                <td>{{ film.annee ? film.annee|date('Y-m-d') : '' }}</td>
-                <td>{{ film.duree }}</td>
-                <td>{{ film.genre }}</td>
-                <td>{{ film.chronologie }}</td>
-                <td>{{ film.format }}</td>
-                <td>{{ film.noteFilm }}</td>
-                <td>{{ film.noteImage }}</td>
-                <td>{{ film.description }}</td>
-                <td>{{ film.avis }}</td>
-                <td>{{ film.art }}</td>
-                <td>
-                    <a href="{{ path('app_film_liste_show', {'id': film.id}) }}">show</a>
-                </td>
+                <td><a href="{{ path('film_liste_show', {'id': film.id}) }}">{% if film.surTitreFrancais %}{{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}</a></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="19">no records found</td>
+                <td colspan="19">Aucune entrée trouvée</td>
             </tr>
         {% endfor %}
         </tbody>

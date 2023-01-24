@@ -1,46 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Film{% endblock %}
+{% block title %}LA KAVASEB | {% if film.surTitreFrancais %}{{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}{% endblock %}
 
 {% block body %}
-    <h1>Film</h1>
+
+    <h1>{% if film.surTitreFrancais %}{{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ film.id }}</td>
-            </tr>
-            <tr>
-                <th>TitreFrancais</th>
-                <td>{{ film.titreFrancais }}</td>
-            </tr>
-            <tr>
-                <th>SurTitreFrancais</th>
-                <td>{{ film.surTitreFrancais }}</td>
-            </tr>
-            <tr>
-                <th>SousTitreFrancais</th>
-                <td>{{ film.sousTitreFrancais }}</td>
-            </tr>
-            <tr>
-                <th>TitreOriginal</th>
-                <td>{{ film.titreOriginal }}</td>
-            </tr>
-            <tr>
-                <th>SurTitreOriginal</th>
-                <td>{{ film.surTitreOriginal }}</td>
-            </tr>
-            <tr>
-                <th>SousTitreOriginal</th>
-                <td>{{ film.sousTitreOriginal }}</td>
+                <th>Titre original</th>
+                <td>{% if film.surTitreOriginal %}{{ film.surTitreOriginal|upper }} – {% endif %}{{ film.titreOriginal|upper }}{% if film.sousTitreOriginal %} : {{ film.sousTitreOriginal }}{% endif %}</td>
             </tr>
             <tr>
                 <th>Image</th>
                 <td><img src="{{ asset('uploads/' ~ film.image) }}" alt=""></td>
             </tr>
             <tr>
-                <th>Annee</th>
+                <th>Année</th>
                 <td>{{ film.annee ? film.annee|date('Y') : '' }}</td>
             </tr>
             <tr>
@@ -60,28 +37,34 @@
                 <td>{{ film.format }}</td>
             </tr>
             <tr>
-                <th>NoteFilm</th>
+                <th>Note Film</th>
                 <td>{{ film.noteFilm }}</td>
             </tr>
             <tr>
-                <th>NoteImage</th>
+                <th>Note Image</th>
                 <td>{{ film.noteImage }}</td>
             </tr>
+            {% if film.description %}
             <tr>
                 <th>Description</th>
                 <td>{{ film.description }}</td>
             </tr>
+            {% endif %}
+            {% if film.avis %}
             <tr>
                 <th>Avis</th>
                 <td>{{ film.avis }}</td>
             </tr>
+            {% endif %}
+            {% if film.art %}
             <tr>
                 <th>Art</th>
                 <td>{{ film.art }}</td>
             </tr>
+            {% endif %}
         </tbody>
     </table>
 
-    <a href="{{ path('film_liste_index') }}">back to list</a>
+    <a href="{{ path('film_liste_index') }}">Retour à la liste</a>
 
 {% endblock %}

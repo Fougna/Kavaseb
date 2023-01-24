@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Film{% endblock %}
+{% block title %}ADMINISTRATION | Modification de {% if film.surTitreFrancais %} {{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }}{% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}{% endblock %}
 
 {% block body %}
-    <h1>Edit Film</h1>
 
-    {{ include('admin_film/_form.html.twig', {'button_label': 'Update'}) }}
+    <h1><b>ADMINISTRATION | </b>Modification de {% if film.surTitreFrancais %} {{ film.surTitreFrancais|upper }} – {% endif %}{{ film.titreFrancais|upper }} {% if film.sousTitreFrancais %} : {{ film.sousTitreFrancais }}{% endif %}</h1>
 
-    <a href="{{ path('admin_film_index') }}">back to list</a>
+    {{ include('admin_film/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('admin_film_index') }}">Retour à la liste</a>
 
     {{ include('admin_film/_delete_form.html.twig') }}
+
 {% endblock %}

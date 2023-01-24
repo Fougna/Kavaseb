@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Personnalite{% endblock %}
+{% block title %}ADMINISTRATION | {{ personnalite.prenom }} {{ personnalite.nom }}{% endblock %}
 
 {% block body %}
 
-    <h1>Personnalite</h1>
+    <h1><b>ADMINISTRATION | </b>{{ personnalite.prenom }} {{ personnalite.nom }}</h1>
+
+    <a href="{{ path('admin_personnalite_index') }}">Retour à la liste</a>
+
+    <a href="{{ path('admin_personnalite_edit', {'id': personnalite.id}) }}">Modifier</a>
 
     <table class="table">
         <tbody>
@@ -20,10 +24,13 @@
                 <th>Prénom</th>
                 <td>{{ personnalite.prenom }}</td>
             </tr>
+            {# Les alias ne s'affichent pas s'ils n'existent pas. #}
+            {% if personnalite.alias %}
             <tr>
                 <th>Alias</th>
                 <td>{{ personnalite.alias ? personnalite.alias|join(', ') : '' }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Sexe</th>
                 <td>{{ personnalite.sexe }}</td>
@@ -32,28 +39,33 @@
                 <th>Nationalité</th>
                 <td>{{ personnalite.nationalite }}</td>
             </tr>
+            {# La date de naissance ne s'affiche pas si elle n'existe pas. #}
+            {% if personnalite.naissance %}
             <tr>
                 <th>Date de naissance</th>
                 <td>{{ personnalite.naissance ? personnalite.naissance|date('d-m-Y') : '' }}</td>
             </tr>
+            {% endif %}
+            {# La date de décès ne s'affiche pas si elle n'existe pas. #}
+            {% if personnalite.deces %}
             <tr>
                 <th>Date de décès</th>
                 <td>{{ personnalite.deces ? personnalite.deces|date('d-m-Y') : '' }}</td>
             </tr>
+            {% endif %}
+            {# L'âge ne s'affiche pas s'il n'existe pas. #}
+            {% if personnalite.age > 0 %}
             <tr>
                 <th>Âge</th>
                 <td>{{ personnalite.age }}</td>
             </tr>
+            {% endif %}
             <tr>
                 <th>Photo</th>
                 <td><img src="{{ asset('uploads/' ~ personnalite.photo) }}" alt=""></td>
             </tr>
         </tbody>
     </table>
-
-    <a href="{{ path('admin_personnalite_index') }}">back to list</a>
-
-    <a href="{{ path('admin_personnalite_edit', {'id': personnalite.id}) }}">edit</a>
 
     {{ include('admin_personnalite/_delete_form.html.twig') }}
 

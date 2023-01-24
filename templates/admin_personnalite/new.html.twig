@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Personnalite{% endblock %}
+{% block title %}ADMINISTRATION | Ajout d'une personnalité{% endblock %}
 
 {% block body %}
 
-    <h1>Create new Personnalite</h1>
+    <h1><b>ADMINISTRATION | </b>Ajout d'une personnalité</h1>
 
     {{ include('admin_personnalite/_form.html.twig') }}
 
-    <a href="{{ path('admin_personnalite_index') }}">back to list</a>
+    <a href="{{ path('admin_personnalite_index') }}">Retour à la liste</a>
 
 {% endblock %}

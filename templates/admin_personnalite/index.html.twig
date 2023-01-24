@@ -1,23 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Personnalite index{% endblock %}
+{% block title %}ADMINISTRATION | Liste des personnalités{% endblock %}
 
 {% block body %}
-    <h1>Personnalite index</h1>
+
+    <h1><b>ADMINISTRATION | </b>Liste des personnalités</h1>
+
+    <a href="{{ path('admin_personnalite_new') }}">Ajouter une nouvelle personnalité</a>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>N° de fiche</th>
                 <th>Nom</th>
-                <th>Prenom</th>
-                <th>Alias</th>
+                <th>Prénom</th>
                 <th>Sexe</th>
-                <th>Nationalite</th>
+                <th>Nationalité</th>
                 <th>Naissance</th>
-                <th>Deces</th>
+                <th>Décès</th>
                 <th>Photo</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,24 +28,21 @@
                 <td>{{ personnalite.id }}</td>
                 <td>{{ personnalite.nom }}</td>
                 <td>{{ personnalite.prenom }}</td>
-                <td>{{ personnalite.alias ? personnalite.alias|join(', ') : '' }}</td>
                 <td>{{ personnalite.sexe }}</td>
                 <td>{{ personnalite.nationalite }}</td>
                 <td>{{ personnalite.naissance ? personnalite.naissance|date('Y-m-d') : '' }}</td>
                 <td>{{ personnalite.deces ? personnalite.deces|date('Y-m-d') : '' }}</td>
                 <td>{{ personnalite.photo }}</td>
                 <td>
-                    <a href="{{ path('admin_personnalite_show', {'id': personnalite.id}) }}">show</a>
-                    <a href="{{ path('admin_personnalite_edit', {'id': personnalite.id}) }}">edit</a>
+                    <p><a href="{{ path('admin_personnalite_show', {'id': personnalite.id}) }}">Afficher</a> | <a href="{{ path('admin_personnalite_edit', {'id': personnalite.id}) }}">Modifier</a></p>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Aucune entrée trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('admin_personnalite_new') }}">Create new</a>
 {% endblock %}

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Auteur index{% endblock %}
+{% block title %}ADMINISTRATION | Liste des auteurs{% endblock %}
 
 {% block body %}
-    <h1>Auteur index</h1>
+    <h1><b>ADMINISTRATION | </b>Liste des auteurs</h1>
 
     <table class="table">
         <thead>
@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Profession</th>
                 <th>Importance</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +21,17 @@
                 <td>{{ auteur.profession }}</td>
                 <td>{{ auteur.importance }}</td>
                 <td>
-                    <a href="{{ path('admin_auteur_show', {'id': auteur.id}) }}">show</a>
-                    <a href="{{ path('admin_auteur_edit', {'id': auteur.id}) }}">edit</a>
+                    <p><a href="{{ path('admin_auteur_show', {'id': auteur.id}) }}">Afficher</a> | <a href="{{ path('admin_auteur_edit', {'id': auteur.id}) }}">Modifier</a></p>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Aucune entrée trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('admin_auteur_new') }}">Create new</a>
+    <a href="{{ path('admin_auteur_new') }}">Ajouter une nouvelle entrée</a>
+
 {% endblock %}

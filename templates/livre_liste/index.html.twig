@@ -52,12 +52,12 @@
                 <td>{{ livre.avis }}</td>
                 <td>{{ livre.art }}</td>
                 <td>
-                    <a href="{{ path('livre_liste_show', {'id': livre.id}) }}">show</a>
+                    <a href="{{ path('livre_liste_show', {'id': livre.id}) }}">Afficher</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="19">no records found</td>
+                <td colspan="19">Aucune entrée trouvée</td>
             </tr>
         {% endfor %}
         </tbody>
