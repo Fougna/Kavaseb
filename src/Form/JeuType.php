@@ -26,6 +26,7 @@ class JeuType extends AbstractType
             ->add('annee')
             ->add('genre')
             ->add('chronologie')
+            ->add('ordreChrono')
             ->add('nombreJoueursMin')
             ->add('nombreJoueursMax')
             ->add('noteJeu')

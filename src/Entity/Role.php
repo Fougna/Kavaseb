@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RoleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,22 @@ class Role
      * @ORM\ManyToOne(targetEntity=Doubleur::class, inversedBy="roles")
      */
     private $doubleur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Auteur::class, inversedBy="roles")
+     */
+    private $auteur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Scenariste::class, inversedBy="roles")
+     */
+    private $scenariste;
+
+    public function __construct()
+    {
+        $this->auteur = new ArrayCollection();
+        $this->scenariste = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -145,5 +163,53 @@ class Role
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * @return Collection<int, Auteur>
+     */
+    public function getAuteur(): Collection
+    {
+        return $this->auteur;
+    }
+
+    public function addAuteur(Auteur $auteur): self
+    {
+        if (!$this->auteur->contains($auteur)) {
+            $this->auteur[] = $auteur;
+        }
+
+        return $this;
+    }
+
+    public function removeAuteur(Auteur $auteur): self
+    {
+        $this->auteur->removeElement($auteur);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Scenariste>
+     */
+    public function getScenariste(): Collection
+    {
+        return $this->scenariste;
+    }
+
+    public function addScenariste(Scenariste $scenariste): self
+    {
+        if (!$this->scenariste->contains($scenariste)) {
+            $this->scenariste[] = $scenariste;
+        }
+
+        return $this;
+    }
+
+    public function removeScenariste(Scenariste $scenariste): self
+    {
+        $this->scenariste->removeElement($scenariste);
+
+        return $this;
     }
 }

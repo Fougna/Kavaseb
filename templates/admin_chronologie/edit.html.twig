@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Chronologie{% endblock %}
+
+{% block body %}
+    <h1>Edit Chronologie</h1>
+
+    {{ include('admin_chronologie/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_chronologie_index') }}">back to list</a>
+
+    {{ include('admin_chronologie/_delete_form.html.twig') }}
+{% endblock %}

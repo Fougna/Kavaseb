@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Chronologie{% endblock %}
+
+{% block body %}
+    <h1>Create new Chronologie</h1>
+
+    {{ include('admin_chronologie/_form.html.twig') }}
+
+    <a href="{{ path('admin_chronologie_index') }}">back to list</a>
+{% endblock %}

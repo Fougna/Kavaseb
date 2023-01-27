@@ -2,32 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Role;
+use App\Entity\Chronologie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RoleType extends AbstractType
+class ChronologieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('nom')
-            ->add('film')
-            ->add('serie')
-            ->add('episode')
-            ->add('jeu')
-            ->add('acteur')
-            ->add('auteur')
-            ->add('doubleur')
-            ->add('scenariste')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Role::class,
+            'data_class' => Chronologie::class,
         ]);
     }
 }

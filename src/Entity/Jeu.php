@@ -65,11 +65,6 @@ class Jeu
     private $genre;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $chronologie;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $nombreJoueursMin;
@@ -143,6 +138,16 @@ class Jeu
      * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="jeu")
      */
     private $compositeurs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Chronologie::class, inversedBy="Jeu")
+     */
+    private $chronologie;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordreChrono;
 
     public function __construct()
     {
@@ -266,18 +271,6 @@ class Jeu
     public function setGenre(string $genre): self
     {
         $this->genre = $genre;
-
-        return $this;
-    }
-
-    public function getChronologie(): ?int
-    {
-        return $this->chronologie;
-    }
-
-    public function setChronologie(?int $chronologie): self
-    {
-        $this->chronologie = $chronologie;
 
         return $this;
     }
@@ -599,6 +592,30 @@ class Jeu
         if ($this->compositeurs->removeElement($compositeur)) {
             $compositeur->removeJeu($this);
         }
+
+        return $this;
+    }
+
+    public function getChronologie(): ?Chronologie
+    {
+        return $this->chronologie;
+    }
+
+    public function setChronologie(?Chronologie $chronologie): self
+    {
+        $this->chronologie = $chronologie;
+
+        return $this;
+    }
+
+    public function getOrdreChrono(): ?int
+    {
+        return $this->ordreChrono;
+    }
+
+    public function setOrdreChrono(int $ordreChrono): self
+    {
+        $this->ordreChrono = $ordreChrono;
 
         return $this;
     }

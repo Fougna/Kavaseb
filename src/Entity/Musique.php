@@ -72,11 +72,6 @@ class Musique
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $chronologie;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
     private $noteMusique;
 
     /**
@@ -98,6 +93,16 @@ class Musique
      * @ORM\ManyToMany(targetEntity=Label::class, mappedBy="musique")
      */
     private $labels;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Chronologie::class, inversedBy="musique")
+     */
+    private $chronologie;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordreChrono;
 
     public function __construct()
     {
@@ -231,18 +236,6 @@ class Musique
         return $this;
     }
 
-    public function getChronologie(): ?int
-    {
-        return $this->chronologie;
-    }
-
-    public function setChronologie(?int $chronologie): self
-    {
-        $this->chronologie = $chronologie;
-
-        return $this;
-    }
-
     public function getNoteMusique(): ?int
     {
         return $this->noteMusique;
@@ -350,6 +343,30 @@ class Musique
         if ($this->labels->removeElement($label)) {
             $label->removeMusique($this);
         }
+
+        return $this;
+    }
+
+    public function getChronologie(): ?Chronologie
+    {
+        return $this->chronologie;
+    }
+
+    public function setChronologie(?Chronologie $chronologie): self
+    {
+        $this->chronologie = $chronologie;
+
+        return $this;
+    }
+
+    public function getOrdreChrono(): ?int
+    {
+        return $this->ordreChrono;
+    }
+
+    public function setOrdreChrono(int $ordreChrono): self
+    {
+        $this->ordreChrono = $ordreChrono;
 
         return $this;
     }

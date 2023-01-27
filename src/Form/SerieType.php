@@ -28,6 +28,7 @@ class SerieType extends AbstractType
             ->add('duree')
             ->add('genre')
             ->add('chronologie')
+            ->add('ordreChrono')
             ->add('format')
             ->add('noteSerie')
             ->add('noteImage')

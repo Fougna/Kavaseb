@@ -27,6 +27,7 @@ class MusiqueType extends AbstractType
             ->add('duree')
             ->add('genre')
             ->add('chronologie')
+            ->add('ordreChrono')
             ->add('noteMusique')
             ->add('art', FileType::class, [
                 'mapped' => false,

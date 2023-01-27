@@ -77,11 +77,6 @@ class Livre
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $chronologie;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
     private $noteLivre;
 
     /**
@@ -128,6 +123,16 @@ class Livre
      * @ORM\ManyToMany(targetEntity=EditeurOriginal::class, mappedBy="livre")
      */
     private $editeurOriginals;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Chronologie::class, inversedBy="livre")
+     */
+    private $chronologie;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordreChrono;
 
     public function __construct()
     {
@@ -271,18 +276,6 @@ class Livre
     public function setGenre(string $genre): self
     {
         $this->genre = $genre;
-
-        return $this;
-    }
-
-    public function getChronologie(): ?int
-    {
-        return $this->chronologie;
-    }
-
-    public function setChronologie(?int $chronologie): self
-    {
-        $this->chronologie = $chronologie;
 
         return $this;
     }
@@ -484,6 +477,30 @@ class Livre
         if ($this->editeurOriginals->removeElement($editeurOriginal)) {
             $editeurOriginal->removeLivre($this);
         }
+
+        return $this;
+    }
+
+    public function getChronologie(): ?Chronologie
+    {
+        return $this->chronologie;
+    }
+
+    public function setChronologie(?Chronologie $chronologie): self
+    {
+        $this->chronologie = $chronologie;
+
+        return $this;
+    }
+
+    public function getOrdreChrono(): ?int
+    {
+        return $this->ordreChrono;
+    }
+
+    public function setOrdreChrono(int $ordreChrono): self
+    {
+        $this->ordreChrono = $ordreChrono;
 
         return $this;
     }

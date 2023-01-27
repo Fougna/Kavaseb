@@ -54,12 +54,18 @@ class Scenariste
      */
     private $importance;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="scenariste")
+     */
+    private $roles;
+
     public function __construct()
     {
         $this->film = new ArrayCollection();
         $this->serie = new ArrayCollection();
         $this->episode = new ArrayCollection();
         $this->jeu = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -203,5 +209,32 @@ class Scenariste
     public function __toString()
     {
         return $this->profession;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+            $role->addScenariste($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        if ($this->roles->removeElement($role)) {
+            $role->removeScenariste($this);
+        }
+
+        return $this;
     }
 }

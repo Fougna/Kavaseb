@@ -28,6 +28,7 @@ class LivreType extends AbstractType
             ->add('isbn')
             ->add('genre')
             ->add('chronologie')
+            ->add('ordreChrono')
             ->add('noteLivre')
             ->add('noteReliure')
             ->add('description')

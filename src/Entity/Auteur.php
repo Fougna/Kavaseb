@@ -59,6 +59,11 @@ class Auteur
      */
     private $jeux;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="auteur")
+     */
+    private $roles;
+
     public function __construct()
     {
         $this->livre = new ArrayCollection();
@@ -66,6 +71,7 @@ class Auteur
         $this->series = new ArrayCollection();
         $this->episodes = new ArrayCollection();
         $this->jeux = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -242,6 +248,33 @@ class Auteur
     {
         if ($this->jeux->removeElement($jeux)) {
             $jeux->removeAuteur($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles[] = $role;
+            $role->addAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        if ($this->roles->removeElement($role)) {
+            $role->removeAuteur($this);
         }
 
         return $this;

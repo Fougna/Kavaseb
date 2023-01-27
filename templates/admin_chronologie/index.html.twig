@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chronologie index{% endblock %}
+
+{% block body %}
+    <h1>Chronologie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chronologie in chronologies %}
+            <tr>
+                <td>{{ chronologie.id }}</td>
+                <td>{{ chronologie.nom }}</td>
+                <td>
+                    <a href="{{ path('admin_chronologie_show', {'id': chronologie.id}) }}">show</a>
+                    <a href="{{ path('admin_chronologie_edit', {'id': chronologie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_chronologie_new') }}">Create new</a>
+{% endblock %}

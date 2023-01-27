@@ -75,11 +75,6 @@ class Serie
     private $genre;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $chronologie;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $format;
@@ -153,6 +148,16 @@ class Serie
      * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="serie")
      */
     private $compositeurs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Chronologie::class, inversedBy="serie")
+     */
+    private $chronologie;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordreChrono;
 
     public function __construct()
     {
@@ -300,18 +305,6 @@ class Serie
     public function setGenre(string $genre): self
     {
         $this->genre = $genre;
-
-        return $this;
-    }
-
-    public function getChronologie(): ?int
-    {
-        return $this->chronologie;
-    }
-
-    public function setChronologie(?int $chronologie): self
-    {
-        $this->chronologie = $chronologie;
 
         return $this;
     }
@@ -636,6 +629,30 @@ class Serie
         if ($this->compositeurs->removeElement($compositeur)) {
             $compositeur->removeSerie($this);
         }
+
+        return $this;
+    }
+
+    public function getChronologie(): ?Chronologie
+    {
+        return $this->chronologie;
+    }
+
+    public function setChronologie(?Chronologie $chronologie): self
+    {
+        $this->chronologie = $chronologie;
+
+        return $this;
+    }
+
+    public function getOrdreChrono(): ?int
+    {
+        return $this->ordreChrono;
+    }
+
+    public function setOrdreChrono(int $ordreChrono): self
+    {
+        $this->ordreChrono = $ordreChrono;
 
         return $this;
     }
