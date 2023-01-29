@@ -95,26 +95,6 @@ class Jeu
     private $art;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Auteur::class, inversedBy="jeux")
-     */
-    private $auteur;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Scenariste::class, mappedBy="jeu")
-     */
-    private $scenaristes;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Acteur::class, mappedBy="jeu")
-     */
-    private $acteurs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Doubleur::class, mappedBy="jeu")
-     */
-    private $doubleurs;
-
-    /**
      * @ORM\OneToMany(targetEntity=Role::class, mappedBy="jeu")
      */
     private $roles;
@@ -135,11 +115,6 @@ class Jeu
     private $editeurs;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="jeu")
-     */
-    private $compositeurs;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Chronologie::class, inversedBy="Jeu")
      */
     private $chronologie;
@@ -149,17 +124,18 @@ class Jeu
      */
     private $ordreChrono;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Profession::class, mappedBy="jeu")
+     */
+    private $professions;
+
     public function __construct()
     {
-        $this->auteur = new ArrayCollection();
-        $this->scenaristes = new ArrayCollection();
-        $this->acteurs = new ArrayCollection();
-        $this->doubleurs = new ArrayCollection();
         $this->roles = new ArrayCollection();
         $this->systemes = new ArrayCollection();
         $this->developpeurs = new ArrayCollection();
         $this->editeurs = new ArrayCollection();
-        $this->compositeurs = new ArrayCollection();
+        $this->professions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -347,115 +323,10 @@ class Jeu
         return $this;
     }
 
-    /**
-     * @return Collection<int, Auteur>
-     */
-    public function getAuteur(): Collection
-    {
-        return $this->auteur;
-    }
-
-    public function addAuteur(Auteur $auteur): self
-    {
-        if (!$this->auteur->contains($auteur)) {
-            $this->auteur[] = $auteur;
-        }
-
-        return $this;
-    }
-
-    public function removeAuteur(Auteur $auteur): self
-    {
-        $this->auteur->removeElement($auteur);
-
-        return $this;
-    }
-
     // Méthode magique convertissant un tableau en chaîne de caractères à partir d'une colonne contenant une valeur en 'string'.
     public function __toString()
     {
         return $this->titreFrancais;
-    }
-
-    /**
-     * @return Collection<int, Scenariste>
-     */
-    public function getScenaristes(): Collection
-    {
-        return $this->scenaristes;
-    }
-
-    public function addScenariste(Scenariste $scenariste): self
-    {
-        if (!$this->scenaristes->contains($scenariste)) {
-            $this->scenaristes[] = $scenariste;
-            $scenariste->addJeu($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScenariste(Scenariste $scenariste): self
-    {
-        if ($this->scenaristes->removeElement($scenariste)) {
-            $scenariste->removeJeu($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Acteur>
-     */
-    public function getActeurs(): Collection
-    {
-        return $this->acteurs;
-    }
-
-    public function addActeur(Acteur $acteur): self
-    {
-        if (!$this->acteurs->contains($acteur)) {
-            $this->acteurs[] = $acteur;
-            $acteur->addJeu($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActeur(Acteur $acteur): self
-    {
-        if ($this->acteurs->removeElement($acteur)) {
-            $acteur->removeJeu($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Doubleur>
-     */
-    public function getDoubleurs(): Collection
-    {
-        return $this->doubleurs;
-    }
-
-    public function addDoubleur(Doubleur $doubleur): self
-    {
-        if (!$this->doubleurs->contains($doubleur)) {
-            $this->doubleurs[] = $doubleur;
-            $doubleur->addJeu($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDoubleur(Doubleur $doubleur): self
-    {
-        if ($this->doubleurs->removeElement($doubleur)) {
-            $doubleur->removeJeu($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -569,33 +440,6 @@ class Jeu
         return $this;
     }
 
-    /**
-     * @return Collection<int, Compositeur>
-     */
-    public function getCompositeurs(): Collection
-    {
-        return $this->compositeurs;
-    }
-
-    public function addCompositeur(Compositeur $compositeur): self
-    {
-        if (!$this->compositeurs->contains($compositeur)) {
-            $this->compositeurs[] = $compositeur;
-            $compositeur->addJeu($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompositeur(Compositeur $compositeur): self
-    {
-        if ($this->compositeurs->removeElement($compositeur)) {
-            $compositeur->removeJeu($this);
-        }
-
-        return $this;
-    }
-
     public function getChronologie(): ?Chronologie
     {
         return $this->chronologie;
@@ -616,6 +460,33 @@ class Jeu
     public function setOrdreChrono(int $ordreChrono): self
     {
         $this->ordreChrono = $ordreChrono;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Profession>
+     */
+    public function getProfessions(): Collection
+    {
+        return $this->professions;
+    }
+
+    public function addProfession(Profession $profession): self
+    {
+        if (!$this->professions->contains($profession)) {
+            $this->professions[] = $profession;
+            $profession->addJeu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfession(Profession $profession): self
+    {
+        if ($this->professions->removeElement($profession)) {
+            $profession->removeJeu($this);
+        }
 
         return $this;
     }

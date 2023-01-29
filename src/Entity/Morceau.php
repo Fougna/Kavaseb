@@ -45,14 +45,14 @@ class Morceau
     private $musique;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="morceau")
+     * @ORM\ManyToMany(targetEntity=Profession::class, mappedBy="morceau")
      */
-    private $compositeurs;
+    private $professions;
 
     public function __construct()
     {
         $this->musique = new ArrayCollection();
-        $this->compositeurs = new ArrayCollection();
+        $this->professions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -139,27 +139,27 @@ class Morceau
     }
 
     /**
-     * @return Collection<int, Compositeur>
+     * @return Collection<int, Profession>
      */
-    public function getCompositeurs(): Collection
+    public function getProfessions(): Collection
     {
-        return $this->compositeurs;
+        return $this->professions;
     }
 
-    public function addCompositeur(Compositeur $compositeur): self
+    public function addProfession(Profession $profession): self
     {
-        if (!$this->compositeurs->contains($compositeur)) {
-            $this->compositeurs[] = $compositeur;
-            $compositeur->addMorceau($this);
+        if (!$this->professions->contains($profession)) {
+            $this->professions[] = $profession;
+            $profession->addMorceau($this);
         }
 
         return $this;
     }
 
-    public function removeCompositeur(Compositeur $compositeur): self
+    public function removeProfession(Profession $profession): self
     {
-        if ($this->compositeurs->removeElement($compositeur)) {
-            $compositeur->removeMorceau($this);
+        if ($this->professions->removeElement($profession)) {
+            $profession->removeMorceau($this);
         }
 
         return $this;

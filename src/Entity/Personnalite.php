@@ -59,54 +59,9 @@ class Personnalite
     private $photo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Auteur::class, mappedBy="personnalite")
-     */
-    private $auteurs;
-
-    /**
      * @ORM\OneToMany(targetEntity=EditeurFrancais::class, mappedBy="personnalite")
      */
     private $editeurFrancais;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Traducteur::class, mappedBy="personnalite")
-     */
-    private $traducteurs;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Preface::class, mappedBy="personnalite")
-     */
-    private $prefaces;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Scenariste::class, mappedBy="personnalite")
-     */
-    private $scenaristes;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Realisateur::class, mappedBy="personnalite")
-     */
-    private $realisateurs;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Producteur::class, mappedBy="personnalite")
-     */
-    private $producteurs;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Acteur::class, mappedBy="personnalite")
-     */
-    private $acteurs;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Doubleur::class, mappedBy="personnalite")
-     */
-    private $doubleurs;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Compositeur::class, mappedBy="personnalite")
-     */
-    private $compositeurs;
 
     /**
      * @ORM\OneToMany(targetEntity=EditeurOriginal::class, mappedBy="personnalite")
@@ -118,19 +73,21 @@ class Personnalite
      */
     private $alias;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Profession::class, mappedBy="personnalite")
+     */
+    private $professions;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $importance;
+
     public function __construct()
     {
-        $this->auteurs = new ArrayCollection();
         $this->editeurFrancais = new ArrayCollection();
-        $this->traducteurs = new ArrayCollection();
-        $this->prefaces = new ArrayCollection();
-        $this->scenaristes = new ArrayCollection();
-        $this->realisateurs = new ArrayCollection();
-        $this->producteurs = new ArrayCollection();
-        $this->acteurs = new ArrayCollection();
-        $this->doubleurs = new ArrayCollection();
-        $this->compositeurs = new ArrayCollection();
         $this->editeurOriginals = new ArrayCollection();
+        $this->professions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -267,36 +224,6 @@ class Personnalite
     }
 
     /**
-     * @return Collection<int, Auteur>
-     */
-    public function getAuteurs(): Collection
-    {
-        return $this->auteurs;
-    }
-
-    public function addAuteur(Auteur $auteur): self
-    {
-        if (!$this->auteurs->contains($auteur)) {
-            $this->auteurs[] = $auteur;
-            $auteur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuteur(Auteur $auteur): self
-    {
-        if ($this->auteurs->removeElement($auteur)) {
-            // set the owning side to null (unless already changed)
-            if ($auteur->getPersonnalite() === $this) {
-                $auteur->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, EditeurFrancais>
      */
     public function getEditeurFrancais(): Collection
@@ -320,246 +247,6 @@ class Personnalite
             // set the owning side to null (unless already changed)
             if ($editeurFrancai->getPersonnalite() === $this) {
                 $editeurFrancai->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Traducteur>
-     */
-    public function getTraducteurs(): Collection
-    {
-        return $this->traducteurs;
-    }
-
-    public function addTraducteur(Traducteur $traducteur): self
-    {
-        if (!$this->traducteurs->contains($traducteur)) {
-            $this->traducteurs[] = $traducteur;
-            $traducteur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTraducteur(Traducteur $traducteur): self
-    {
-        if ($this->traducteurs->removeElement($traducteur)) {
-            // set the owning side to null (unless already changed)
-            if ($traducteur->getPersonnalite() === $this) {
-                $traducteur->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Preface>
-     */
-    public function getPrefaces(): Collection
-    {
-        return $this->prefaces;
-    }
-
-    public function addPreface(Preface $preface): self
-    {
-        if (!$this->prefaces->contains($preface)) {
-            $this->prefaces[] = $preface;
-            $preface->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removePreface(Preface $preface): self
-    {
-        if ($this->prefaces->removeElement($preface)) {
-            // set the owning side to null (unless already changed)
-            if ($preface->getPersonnalite() === $this) {
-                $preface->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Scenariste>
-     */
-    public function getScenaristes(): Collection
-    {
-        return $this->scenaristes;
-    }
-
-    public function addScenariste(Scenariste $scenariste): self
-    {
-        if (!$this->scenaristes->contains($scenariste)) {
-            $this->scenaristes[] = $scenariste;
-            $scenariste->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScenariste(Scenariste $scenariste): self
-    {
-        if ($this->scenaristes->removeElement($scenariste)) {
-            // set the owning side to null (unless already changed)
-            if ($scenariste->getPersonnalite() === $this) {
-                $scenariste->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Realisateur>
-     */
-    public function getRealisateurs(): Collection
-    {
-        return $this->realisateurs;
-    }
-
-    public function addRealisateur(Realisateur $realisateur): self
-    {
-        if (!$this->realisateurs->contains($realisateur)) {
-            $this->realisateurs[] = $realisateur;
-            $realisateur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRealisateur(Realisateur $realisateur): self
-    {
-        if ($this->realisateurs->removeElement($realisateur)) {
-            // set the owning side to null (unless already changed)
-            if ($realisateur->getPersonnalite() === $this) {
-                $realisateur->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Producteur>
-     */
-    public function getProducteurs(): Collection
-    {
-        return $this->producteurs;
-    }
-
-    public function addProducteur(Producteur $producteur): self
-    {
-        if (!$this->producteurs->contains($producteur)) {
-            $this->producteurs[] = $producteur;
-            $producteur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProducteur(Producteur $producteur): self
-    {
-        if ($this->producteurs->removeElement($producteur)) {
-            // set the owning side to null (unless already changed)
-            if ($producteur->getPersonnalite() === $this) {
-                $producteur->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Acteur>
-     */
-    public function getActeurs(): Collection
-    {
-        return $this->acteurs;
-    }
-
-    public function addActeur(Acteur $acteur): self
-    {
-        if (!$this->acteurs->contains($acteur)) {
-            $this->acteurs[] = $acteur;
-            $acteur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActeur(Acteur $acteur): self
-    {
-        if ($this->acteurs->removeElement($acteur)) {
-            // set the owning side to null (unless already changed)
-            if ($acteur->getPersonnalite() === $this) {
-                $acteur->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Doubleur>
-     */
-    public function getDoubleurs(): Collection
-    {
-        return $this->doubleurs;
-    }
-
-    public function addDoubleur(Doubleur $doubleur): self
-    {
-        if (!$this->doubleurs->contains($doubleur)) {
-            $this->doubleurs[] = $doubleur;
-            $doubleur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDoubleur(Doubleur $doubleur): self
-    {
-        if ($this->doubleurs->removeElement($doubleur)) {
-            // set the owning side to null (unless already changed)
-            if ($doubleur->getPersonnalite() === $this) {
-                $doubleur->setPersonnalite(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Compositeur>
-     */
-    public function getCompositeurs(): Collection
-    {
-        return $this->compositeurs;
-    }
-
-    public function addCompositeur(Compositeur $compositeur): self
-    {
-        if (!$this->compositeurs->contains($compositeur)) {
-            $this->compositeurs[] = $compositeur;
-            $compositeur->setPersonnalite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompositeur(Compositeur $compositeur): self
-    {
-        if ($this->compositeurs->removeElement($compositeur)) {
-            // set the owning side to null (unless already changed)
-            if ($compositeur->getPersonnalite() === $this) {
-                $compositeur->setPersonnalite(null);
             }
         }
 
@@ -604,6 +291,45 @@ class Personnalite
     public function setAlias(string $alias): self
     {
         $this->alias = $alias;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Profession>
+     */
+    public function getProfessions(): Collection
+    {
+        return $this->professions;
+    }
+
+    public function addProfession(Profession $profession): self
+    {
+        if (!$this->professions->contains($profession)) {
+            $this->professions[] = $profession;
+            $profession->addPersonnalite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfession(Profession $profession): self
+    {
+        if ($this->professions->removeElement($profession)) {
+            $profession->removePersonnalite($this);
+        }
+
+        return $this;
+    }
+
+    public function getImportance(): ?int
+    {
+        return $this->importance;
+    }
+
+    public function setImportance(int $importance): self
+    {
+        $this->importance = $importance;
 
         return $this;
     }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Profession{% endblock %}
+
+{% block body %}
+    <h1>Create new Profession</h1>
+
+    {{ include('admin_profession/_form.html.twig') }}
+
+    <a href="{{ path('admin_profession_index') }}">back to list</a>
+{% endblock %}

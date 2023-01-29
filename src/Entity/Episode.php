@@ -35,55 +35,19 @@ class Episode
     private $saison;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Auteur::class, inversedBy="episodes")
-     */
-    private $auteur;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Scenariste::class, mappedBy="episode")
-     */
-    private $scenaristes;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Realisateur::class, mappedBy="episode")
-     */
-    private $realisateurs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Producteur::class, mappedBy="episode")
-     */
-    private $producteurs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Acteur::class, mappedBy="episode")
-     */
-    private $acteurs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Doubleur::class, mappedBy="episode")
-     */
-    private $doubleurs;
-
-    /**
      * @ORM\OneToMany(targetEntity=Role::class, mappedBy="episode")
      */
     private $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="episode")
+     * @ORM\ManyToMany(targetEntity=Profession::class, mappedBy="episode")
      */
-    private $compositeurs;
+    private $professions;
 
     public function __construct()
     {
-        $this->auteur = new ArrayCollection();
-        $this->scenaristes = new ArrayCollection();
-        $this->realisateurs = new ArrayCollection();
-        $this->producteurs = new ArrayCollection();
-        $this->acteurs = new ArrayCollection();
-        $this->doubleurs = new ArrayCollection();
         $this->roles = new ArrayCollection();
-        $this->compositeurs = new ArrayCollection();
+        $this->professions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,169 +91,10 @@ class Episode
         return $this;
     }
 
-    /**
-     * @return Collection<int, Auteur>
-     */
-    public function getAuteur(): Collection
-    {
-        return $this->auteur;
-    }
-
-    public function addAuteur(Auteur $auteur): self
-    {
-        if (!$this->auteur->contains($auteur)) {
-            $this->auteur[] = $auteur;
-        }
-
-        return $this;
-    }
-
-    public function removeAuteur(Auteur $auteur): self
-    {
-        $this->auteur->removeElement($auteur);
-
-        return $this;
-    }
-
     // Méthode magique convertissant un tableau en chaîne de caractères à partir d'une colonne contenant une valeur en 'string'.
     public function __toString()
     {
         return $this->titre;
-    }
-
-    /**
-     * @return Collection<int, Scenariste>
-     */
-    public function getScenaristes(): Collection
-    {
-        return $this->scenaristes;
-    }
-
-    public function addScenariste(Scenariste $scenariste): self
-    {
-        if (!$this->scenaristes->contains($scenariste)) {
-            $this->scenaristes[] = $scenariste;
-            $scenariste->addEpisode($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScenariste(Scenariste $scenariste): self
-    {
-        if ($this->scenaristes->removeElement($scenariste)) {
-            $scenariste->removeEpisode($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Realisateur>
-     */
-    public function getRealisateurs(): Collection
-    {
-        return $this->realisateurs;
-    }
-
-    public function addRealisateur(Realisateur $realisateur): self
-    {
-        if (!$this->realisateurs->contains($realisateur)) {
-            $this->realisateurs[] = $realisateur;
-            $realisateur->addEpisode($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRealisateur(Realisateur $realisateur): self
-    {
-        if ($this->realisateurs->removeElement($realisateur)) {
-            $realisateur->removeEpisode($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Producteur>
-     */
-    public function getProducteurs(): Collection
-    {
-        return $this->producteurs;
-    }
-
-    public function addProducteur(Producteur $producteur): self
-    {
-        if (!$this->producteurs->contains($producteur)) {
-            $this->producteurs[] = $producteur;
-            $producteur->addEpisode($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProducteur(Producteur $producteur): self
-    {
-        if ($this->producteurs->removeElement($producteur)) {
-            $producteur->removeEpisode($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Acteur>
-     */
-    public function getActeurs(): Collection
-    {
-        return $this->acteurs;
-    }
-
-    public function addActeur(Acteur $acteur): self
-    {
-        if (!$this->acteurs->contains($acteur)) {
-            $this->acteurs[] = $acteur;
-            $acteur->addEpisode($this);
-        }
-
-        return $this;
-    }
-
-    public function removeActeur(Acteur $acteur): self
-    {
-        if ($this->acteurs->removeElement($acteur)) {
-            $acteur->removeEpisode($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Doubleur>
-     */
-    public function getDoubleurs(): Collection
-    {
-        return $this->doubleurs;
-    }
-
-    public function addDoubleur(Doubleur $doubleur): self
-    {
-        if (!$this->doubleurs->contains($doubleur)) {
-            $this->doubleurs[] = $doubleur;
-            $doubleur->addEpisode($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDoubleur(Doubleur $doubleur): self
-    {
-        if ($this->doubleurs->removeElement($doubleur)) {
-            $doubleur->removeEpisode($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -323,27 +128,27 @@ class Episode
     }
 
     /**
-     * @return Collection<int, Compositeur>
+     * @return Collection<int, Profession>
      */
-    public function getCompositeurs(): Collection
+    public function getProfessions(): Collection
     {
-        return $this->compositeurs;
+        return $this->professions;
     }
 
-    public function addCompositeur(Compositeur $compositeur): self
+    public function addProfession(Profession $profession): self
     {
-        if (!$this->compositeurs->contains($compositeur)) {
-            $this->compositeurs[] = $compositeur;
-            $compositeur->addEpisode($this);
+        if (!$this->professions->contains($profession)) {
+            $this->professions[] = $profession;
+            $profession->addEpisode($this);
         }
 
         return $this;
     }
 
-    public function removeCompositeur(Compositeur $compositeur): self
+    public function removeProfession(Profession $profession): self
     {
-        if ($this->compositeurs->removeElement($compositeur)) {
-            $compositeur->removeEpisode($this);
+        if ($this->professions->removeElement($profession)) {
+            $profession->removeEpisode($this);
         }
 
         return $this;

@@ -2,12 +2,14 @@
 
 namespace App\Form;
 
+use App\Entity\Profession;
 use App\Entity\Personnalite;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PersonnaliteType extends AbstractType
 {
@@ -29,6 +31,8 @@ class PersonnaliteType extends AbstractType
                 'years' => range(date('Y') - 5000, date('Y')),
                 'required' => false
                 ])
+            ->add('professions')
+            ->add('importance')
             ->add('photo', FileType::class, [
             'mapped' => false,
             'required' => false

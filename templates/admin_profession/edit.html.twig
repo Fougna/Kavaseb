@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Profession{% endblock %}
+
+{% block body %}
+    <h1>Edit Profession</h1>
+
+    {{ include('admin_profession/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_profession_index') }}">back to list</a>
+
+    {{ include('admin_profession/_delete_form.html.twig') }}
+{% endblock %}

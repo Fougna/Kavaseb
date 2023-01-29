@@ -100,24 +100,9 @@ class Livre
     private $art;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Auteur::class, mappedBy="livre")
-     */
-    private $auteurs;
-
-    /**
      * @ORM\ManyToMany(targetEntity=EditeurFrancais::class, mappedBy="livre")
      */
     private $editeurFrancais;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Traducteur::class, mappedBy="livre")
-     */
-    private $traducteurs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Preface::class, mappedBy="livre")
-     */
-    private $prefaces;
 
     /**
      * @ORM\ManyToMany(targetEntity=EditeurOriginal::class, mappedBy="livre")
@@ -134,13 +119,16 @@ class Livre
      */
     private $ordreChrono;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Profession::class, mappedBy="livre")
+     */
+    private $professions;
+
     public function __construct()
     {
-        $this->auteurs = new ArrayCollection();
         $this->editeurFrancais = new ArrayCollection();
-        $this->traducteurs = new ArrayCollection();
-        $this->prefaces = new ArrayCollection();
         $this->editeurOriginals = new ArrayCollection();
+        $this->professions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -347,33 +335,6 @@ class Livre
     }
 
     /**
-     * @return Collection<int, Auteur>
-     */
-    public function getAuteurs(): Collection
-    {
-        return $this->auteurs;
-    }
-
-    public function addAuteur(Auteur $auteur): self
-    {
-        if (!$this->auteurs->contains($auteur)) {
-            $this->auteurs[] = $auteur;
-            $auteur->addLivre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAuteur(Auteur $auteur): self
-    {
-        if ($this->auteurs->removeElement($auteur)) {
-            $auteur->removeLivre($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, EditeurFrancais>
      */
     public function getEditeurFrancais(): Collection
@@ -395,60 +356,6 @@ class Livre
     {
         if ($this->editeurFrancais->removeElement($editeurFrancai)) {
             $editeurFrancai->removeLivre($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Traducteur>
-     */
-    public function getTraducteurs(): Collection
-    {
-        return $this->traducteurs;
-    }
-
-    public function addTraducteur(Traducteur $traducteur): self
-    {
-        if (!$this->traducteurs->contains($traducteur)) {
-            $this->traducteurs[] = $traducteur;
-            $traducteur->addLivre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTraducteur(Traducteur $traducteur): self
-    {
-        if ($this->traducteurs->removeElement($traducteur)) {
-            $traducteur->removeLivre($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Preface>
-     */
-    public function getPrefaces(): Collection
-    {
-        return $this->prefaces;
-    }
-
-    public function addPreface(Preface $preface): self
-    {
-        if (!$this->prefaces->contains($preface)) {
-            $this->prefaces[] = $preface;
-            $preface->addLivre($this);
-        }
-
-        return $this;
-    }
-
-    public function removePreface(Preface $preface): self
-    {
-        if ($this->prefaces->removeElement($preface)) {
-            $preface->removeLivre($this);
         }
 
         return $this;
@@ -501,6 +408,33 @@ class Livre
     public function setOrdreChrono(int $ordreChrono): self
     {
         $this->ordreChrono = $ordreChrono;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Profession>
+     */
+    public function getProfessions(): Collection
+    {
+        return $this->professions;
+    }
+
+    public function addProfession(Profession $profession): self
+    {
+        if (!$this->professions->contains($profession)) {
+            $this->professions[] = $profession;
+            $profession->addLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfession(Profession $profession): self
+    {
+        if ($this->professions->removeElement($profession)) {
+            $profession->removeLivre($this);
+        }
 
         return $this;
     }

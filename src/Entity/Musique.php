@@ -85,11 +85,6 @@ class Musique
     private $morceaux;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Compositeur::class, mappedBy="musique")
-     */
-    private $compositeurs;
-
-    /**
      * @ORM\ManyToMany(targetEntity=Label::class, mappedBy="musique")
      */
     private $labels;
@@ -104,11 +99,16 @@ class Musique
      */
     private $ordreChrono;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Profession::class, mappedBy="musique")
+     */
+    private $professions;
+
     public function __construct()
     {
         $this->morceaux = new ArrayCollection();
-        $this->compositeurs = new ArrayCollection();
         $this->labels = new ArrayCollection();
+        $this->professions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -294,33 +294,6 @@ class Musique
     }
 
     /**
-     * @return Collection<int, Compositeur>
-     */
-    public function getCompositeurs(): Collection
-    {
-        return $this->compositeurs;
-    }
-
-    public function addCompositeur(Compositeur $compositeur): self
-    {
-        if (!$this->compositeurs->contains($compositeur)) {
-            $this->compositeurs[] = $compositeur;
-            $compositeur->addMusique($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCompositeur(Compositeur $compositeur): self
-    {
-        if ($this->compositeurs->removeElement($compositeur)) {
-            $compositeur->removeMusique($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Label>
      */
     public function getLabels(): Collection
@@ -367,6 +340,33 @@ class Musique
     public function setOrdreChrono(int $ordreChrono): self
     {
         $this->ordreChrono = $ordreChrono;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Profession>
+     */
+    public function getProfessions(): Collection
+    {
+        return $this->professions;
+    }
+
+    public function addProfession(Profession $profession): self
+    {
+        if (!$this->professions->contains($profession)) {
+            $this->professions[] = $profession;
+            $profession->addMusique($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfession(Profession $profession): self
+    {
+        if ($this->professions->removeElement($profession)) {
+            $profession->removeMusique($this);
+        }
 
         return $this;
     }
